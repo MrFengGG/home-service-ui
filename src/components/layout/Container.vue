@@ -1,11 +1,19 @@
 <template>
     <el-container>
-        <el-aside width="200px">Aside</el-aside>
-        <el-container>
-            <el-header>Header</el-header>
-            <el-main>Main</el-main>
-            <el-footer>Footer</el-footer>
-        </el-container>
+      <el-aside width="200px">
+        <slot name="slider"></slot>
+      </el-aside>
+      <el-container>
+        <el-header>
+          <slot name="header"></slot>
+        </el-header>
+        <el-main>
+          <slot name="main"></slot>
+        </el-main>
+        <el-footer>
+          <slot name="foot"></slot>
+        </el-footer>
+      </el-container>
     </el-container>
 </template>
 <style>
@@ -15,17 +23,15 @@
     height: 100%;
   }
   .el-header, .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
     text-align: center;
-    line-height: 60px;
+    line-height: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   }
   
   .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
     text-align: center;
     line-height: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   }
   
   .el-main {
@@ -40,10 +46,10 @@
   }
 </style>
 <script>
-    export default {
-        name: 'Container',
-        props: {
-            msg: String
-        }
-    }
+  export default {
+      name: 'Container',
+      props: {
+          msg: String
+      }
+  }
 </script>

@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <Container/>
+    <Container>
+      <Slider slot="slider"/>
+      <Header slot="header"/>
+    </Container>
   </div>
 </template>
-
 <script>
-import Container from './components/Container.vue'
-
+import Container from './components/layout/Container.vue'
+import Slider from './components/layout/Slider.vue'
+import Header from './components/layout/Header.vue'
 export default {
   name: 'app',
   components: {
-    Container
+    Container,
+    Slider,
+    Header
   }
 }
 </script>
