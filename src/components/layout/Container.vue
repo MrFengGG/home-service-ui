@@ -1,8 +1,6 @@
 <template>
     <el-container>
-      <el-aside width="200px">
         <slot name="slider"></slot>
-      </el-aside>
       <el-container>
         <el-header>
           <slot name="header"></slot>
@@ -31,7 +29,6 @@
   .el-aside {
     text-align: center;
     line-height: 200px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   }
   
   .el-main {

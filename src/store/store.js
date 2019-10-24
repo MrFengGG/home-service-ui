@@ -2,39 +2,39 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-const State = {
+const state = {
     contextConfig : {
         isSlideCollpase : true      //侧边栏是否展开
     }
 }
 
-const Getters = {
-    isSlideCollapse : function(State){
-        return State.contextConfig.isSlideCollapse;
+const getters = {
+    isSlideCollapse : function(state){
+        return state.contextConfig.isSlideCollapse;
     }
 }
 
-const Mutations = {
-    toggleSlideMenu(State){
-        State.contextConfig.isSlideCollapse = !State.contextConfig.isSlideCollapse;
+const mutations = {
+    toggleSlideMenu(state){
+        state.contextConfig.isSlideCollpase = !state.contextConfig.isSlideCollpase;
     },
-    showSlideMenu(State){
-        State.contextConfig.isSlideCollapse = true;
+    showSlideMenu(state){
+        state.contextConfig.isSlideCollapse = true;
     },
-    hideSlideMenu(State){
-        State.contextConfig.isSlideCollapse = false;
+    hideSlideMenu(state){
+        state.contextConfig.isSlideCollapse = false;
     }
 }
 
-const Actions = {
+const actions = {
     toggleSlideMenu({commit}){
         commit('toggleSlideMenu');
     }
 }
 
 export default new Vuex.Store({
-    State,
-    Actions,
-    Mutations,
-    Getters
+    state,
+    actions,
+    mutations,
+    getters
 })
