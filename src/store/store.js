@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
     contextConfig : {
-        isSlideCollpase : true      //侧边栏是否展开
+        isSlideCollpase : true,      //侧边栏是否展开
+        menuGroupCpde : "plat"       //当前菜单组
     }
 }
 
