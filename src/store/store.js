@@ -5,13 +5,22 @@ Vue.use(Vuex)
 const state = {
     contextConfig : {
         isSlideCollpase : true,      //侧边栏是否展开
-        menuGroupCpde : "plat"       //当前菜单组
+    },
+    contextData : {
+        token : "",
+        menuGroup : "plat"
     }
 }
 
 const getters = {
     isSlideCollapse : function(state){
         return state.contextConfig.isSlideCollapse;
+    },
+    menuGroup : function(state){
+        return state.contextData.menuGroup;
+    },
+    token : function(state){
+        return state.contextData.token;
     }
 }
 
@@ -24,12 +33,21 @@ const mutations = {
     },
     hideSlideMenu(state){
         state.contextConfig.isSlideCollapse = false;
+    },
+    refreshToken(state, token){
+        state.contextData.token = token;
+    },
+    changeMenuGroup(state, groupName){
+        state.contextData.menuGroup = groupName;
     }
 }
 
 const actions = {
     toggleSlideMenu({commit}){
         commit('toggleSlideMenu');
+    },
+    changeMenuGroup({commit}, groupName){
+        commit('changeMenuGroup', groupName);
     }
 }
 
