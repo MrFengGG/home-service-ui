@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-const fs = require('fs');
+var fs = require('fs');
 const path = require('path');
 
 const loadJsonFile = function(filePath){
@@ -14,22 +14,22 @@ const successResult = function(obj){
     }
 }
 
-Mock.mock('/auth/accessToken', 'get', function(params){
+Mock.mock('/auth/accessToken', 'get', function(){
     return successResult({
         token : "abcdexf",
         expireTime : "123"
     });
 });
-Mock.mock('/auth/checkToken', 'get', function(params){
+Mock.mock('/auth/checkToken', 'get', function(){
     const user = loadJsonFile('./user.json');
     return successResult(user[0]);
 });
 
-Mock.mock('/menu/getAllGroup', 'get', function(params){
+Mock.mock('/menu/getAllGroup', 'get', function(){
     const menu = loadJsonFile('./menuGroup.json');
     return successResult(menu);
 })
-Mock.mock('/menu/getAllMenu', 'get', function(params){
+Mock.mock('/menu/getAllMenu', 'get', function(){
     const menu = loadJsonFile('./menu.json');
     return successResult(menu);
 })

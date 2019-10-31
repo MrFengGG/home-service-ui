@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store from './store/store'
+import store from '../store/store'
 
 
 const get = function(url, param){
@@ -14,12 +14,4 @@ export default{
 }
 const commonHeader = function(){
     return {token : store.getters.token};
-}
-const paramToUrl = function(url, param){
-    const paramArray = [];
-    for(i in param){
-        paramArray.push(i + "=" + param[i]);
-    }
-    url += url.indexOf("?") == -1 ? "?" : "&";
-    return url + paramArray.join("&");
 }
