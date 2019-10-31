@@ -32,15 +32,14 @@
           }
       },
       data(){
-          return {menuList : [
-              {
-                        "grop_name" : "管理平台",
-                        "code" : "plat"
-                    }
-          ]}
+          return {menuList : []}
       },
       created(){
-        request.get(this.groupUrl)
+        request.get(this.groupUrl).then(data =>{
+            if(data.code > 0){
+                this.menuList = data.data;
+            }
+        })
       },
       methods : {
         ...mapActions([
