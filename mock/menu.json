@@ -1,8 +1,50 @@
 [
     {
-        "menu_name" : "测试菜单1",
-        "menu_code" : "test",
+        "menu_name" : "菜单管理",
+        "code" : "menu",
         "component_name" : "test",
-        "conponent_param" : "json"
+        "conponent_param" : "json",
+        "menu_group_code" : "plat",
+        "icon" : "el-icon-menu",
+        "menu_type" : "1",
+        "childList" : [
+            {
+                "menu_name" : "菜单管理",
+                "code" : "menu-menuList",
+                "component_name" : "test",
+                "conponent_param" : "json",
+                "menu_group_code" : "plat"
+            },{
+                "menu_name" : "组件管理",
+                "code" : "componentList",
+                "component_name" : "test",
+                "conponent_param" : "json",
+                "menu_group_code" : "plat"
+            }
+
+        ]
+    },{
+        "menu_name" : "用户管理",
+        "code" : "sysUser",
+        "component_name" : "test",
+        "conponent_param" : "json",
+        "menu_group_code" : "plat",
+        "menu_type" : "1",
+        "icon" : "el-icon-user",
+        "childList" : [
+            {
+                "menu_name" : "用户管理",
+                "code" : "menuList",
+                "component_name" : "test",
+                "conponent_param" : "json",
+                "menu_group_code" : "plat"
+            },{
+                "menu_name" : "权限管理",
+                "code" : "roleList",
+                "component_name" : "test",
+                "conponent_param" : "json",
+                "menu_group_code" : "plat"
+            }
+        ]
     }
 ]

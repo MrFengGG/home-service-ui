@@ -2,7 +2,7 @@
     <div style="width:100%">
         <el-row>
             <el-col :span="3">
-                <el-button class="left-head-button" icon="el-icon-menu" @click="toggleSliderMenu" size="small"></el-button>
+                <el-button class="left-head-button" icon="el-icon-menu" @click="toggleSlideMenu" size="small"></el-button>
             </el-col>
             <el-col :span="17">
                 <el-menu class="el-menu-demo" active-text-color="#ffd04b" mode="horizontal" @select="handleSelect">
@@ -46,12 +46,8 @@
             "toggleSlideMenu",
             "changeMenuGroup"
         ]),
-        toggleSliderMenu(){
-            this.toggleSlideMenu();
-        },
         handleSelect(key){
             this.changeMenuGroup(key);
-            console.log(key);
         }
       },
   }

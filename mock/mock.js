@@ -1,6 +1,7 @@
 import Mock from 'mockjs';
 var userList = require("./user.json")
 var menuGroupList = require("./menuGroup.json")
+var menuList = require("./menu.json")
 
 const loadJsonFile = function(filePath){
     const json = fs.readFileSync(path.resolve(__dirname,filePath), 'utf-8');
@@ -27,7 +28,7 @@ Mock.mock('/auth/checkToken', 'get', function(){
 Mock.mock('/menu/getAllGroup', 'get', function(){
     return successResult(menuGroupList);
 })
-Mock.mock('/menu/getAllMenu', 'get', function(){
-    const menu = loadJsonFile('./menu.json');
-    return successResult(menu);
+Mock.mock('/menu/getAllMenu', 'get', function(param){
+    console.log(param);
+    return successResult(menuList);
 })
