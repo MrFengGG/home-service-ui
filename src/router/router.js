@@ -18,7 +18,7 @@ router.$addRoutes = (routers) => {
     for(let noCacheRouter of noCacheRouters){
         cacheRoutes[noCacheRouter.name] = noCacheRouters;
     }
-    console.log(noCacheRouters)
     router.addRoutes(noCacheRouters)
+    console.log()
 };
 export default router;

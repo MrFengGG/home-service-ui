@@ -47,7 +47,6 @@
         request.get(this.menuUrl).then(data =>{
           if(data.code > 0){
               this.menuList = data.data;
-              console.log(this.menuToRouters(data.data))
               this.$router.$addRoutes(this.menuToRouters(data.data));
           }
         })
@@ -57,11 +56,10 @@
         for(let menu of menuList){
           if(menu.menu_type == 0){
             routers.push({
-                name : menu.code,
+                name : menu.path,
                 component : components[menu.component_name],
                 path : menu.path,
-                props : true,
-                params : menu.component_param
+                props : menu.component_param
             });
           }
           if(menu.childList){

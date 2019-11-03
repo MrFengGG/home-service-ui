@@ -7,6 +7,7 @@
         "menu_group_code" : "plat",
         "icon" : "el-icon-menu",
         "menu_type" : "1",
+        "id" : 1,
         "childList" : [
             {
                 "menu_name" : "菜单管理",
@@ -16,7 +17,38 @@
                 "menu_group_code" : "plat",
                 "menu_type" : "0",
                 "path" : "/menu/list",
-                "component_param" : {}
+                "id" : 2,
+                "component_param" : {
+                    "tableHead" : [
+                        {
+                            "code" : "code",
+                            "name" : "菜单代码"
+                        },{
+                            "code" : "menu_name",
+                            "name" : "菜单名称"
+                        },{
+                            "code" : "menu_desc",
+                            "name" : "菜单详情"
+                        },{
+                            "code" : "path",
+                            "name" : "菜单路径"
+                        },{
+                            "code" : "component_name",
+                            "name" : "组件名称"
+                        },{
+                            "code" : "create_time",
+                            "name" : "创建时间"
+                        },{
+                            "code" : "menu_type",
+                            "name" : "菜单类型"
+                        }
+                    ],
+                    "submitUrl" : "/menu/pageQueryMenu",
+                    "treeSet" : {
+                        "children" : "childList",
+                        "hasChildren" : true
+                    }
+                }
             },{
                 "menu_name" : "组件管理",
                 "code" : "componentList",
@@ -25,6 +57,7 @@
                 "menu_group_code" : "plat",
                 "menu_type" : "0",
                 "path" : "/menu/component",
+                "id" : 3,
                 "component_param" : {}
             }
 
@@ -37,6 +70,7 @@
         "menu_group_code" : "plat",
         "menu_type" : "1",
         "icon" : "el-icon-user",
+        "id" : 4,
         "childList" : [
             {
                 "menu_name" : "用户管理",
@@ -46,6 +80,7 @@
                 "menu_group_code" : "plat",
                 "menu_type" : "0",
                 "path" : "/user/list",
+                "id" : 5,
                 "component_param" : {}
             },{
                 "menu_name" : "权限管理",
@@ -55,6 +90,7 @@
                 "menu_group_code" : "plat",
                 "menu_type" : "0",
                 "path" : "/user/role",
+                "id" : 6,
                 "component_param" : {}
             }
         ]

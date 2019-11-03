@@ -35,20 +35,18 @@
                 <el-button type="primary" @click="query" style="margin-left:70%">查询</el-button>
             </el-form-item>
         </el-form>
-        <el-table :data="tableData" border>
-            <el-table-column prop="date" label="日期"></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table :data="tableData" :tree-props="treeSet" row-key="id" border>
+            <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
         </el-table>
         <el-pagination
-        style="text-align: right"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageNo"
-        :page-sizes="[10, 15, 20, 25]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total">
+            style="text-align: right"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNo"
+            :page-sizes="[10, 15, 20, 25]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
         </el-pagination>
     </div>
 </template>
@@ -72,6 +70,9 @@ export default {
         },
         tableHead : {
             type: Array
+        },
+        treeSet : {
+            type: Object
         }
     },
     name: 'TablePage',
@@ -85,6 +86,9 @@ export default {
             pageSize : 10,
             total : 0,
         }  
+    },
+    created : function(){
+        this.query();
     },
     methods : {
         query(){
