@@ -5,7 +5,7 @@
                 <el-button class="left-head-button" icon="el-icon-menu" @click="toggleSlideMenu" size="small"></el-button>
             </el-col>
             <el-col :span="17">
-                <el-menu class="el-menu-demo" active-text-color="#ffd04b" mode="horizontal" @select="handleSelect">
+                <el-menu class="el-menu-demo" active-text-color="#ffd04b" mode="horizontal" @select="handleSelect" :default-active="menuGroup">
                     <el-menu-item v-for="menu in menuList" v-bind:key="menu.code" v-bind:index="menu.code"><a>{{menu.grop_name}}</a></el-menu-item>
                 </el-menu>
             </el-col>
@@ -21,7 +21,7 @@
     }
 </style>
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
   import request from '../../util/request'
   export default {
       name : 'Header',
@@ -33,6 +33,11 @@
       },
       data(){
           return {menuList : []}
+      },
+      computed: {
+        ...mapGetters([
+          'menuGroup'
+        ])
       },
       created(){
         request.get(this.groupUrl).then(data =>{

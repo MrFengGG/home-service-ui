@@ -20,7 +20,7 @@
     margin: 0px;
     height: 100%;
   }
-  .el-header, .el-footer {
+  .el-header{
     text-align: center;
     line-height: 40px;
     padding: 0px;
@@ -34,7 +34,6 @@
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    line-height: 160px;
   }
   
   body > .el-container {

@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const state = {
     contextConfig : {
-        isSlideCollpase : false,      //侧边栏是否展开
+        isSlideCollpase : false,
     },
     contextData : {
         token : "",
@@ -14,7 +14,6 @@ const state = {
 
 const getters = {
     isSlideCollapse : function(state){
-        console.log(state.contextConfig.isSlideCollpase)
         return state.contextConfig.isSlideCollpase;
     },
     menuGroup : function(state){
