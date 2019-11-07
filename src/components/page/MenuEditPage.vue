@@ -1,24 +1,24 @@
 <template>
   <el-form ref="form" :model="form" label-width="80px">
     <el-row :gutter="30">
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单名称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单路径">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="30">
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单代码">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单图标">
           <el-select v-model="form.region" placeholder="请选择菜单类型">
             <el-option value="shanghai">
@@ -32,7 +32,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="30">
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单类型">
           <el-select v-model="form.region" placeholder="请选择菜单类型">
             <el-option label="父级菜单" value="shanghai"></el-option>
@@ -40,7 +40,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单组">
           <el-select v-model="form.region" placeholder="请选择菜单组">
             <el-option label="父级菜单" value="shanghai"></el-option>
@@ -50,15 +50,14 @@
       </el-col>
     </el-row>
     <el-row :gutter="30">
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="菜单组件">
           <el-select v-model="form.region" placeholder="请选择菜单组件">
-            <el-option label="父级菜单" value="shanghai"></el-option>
-            <el-option label="跳转菜单" value="beijing"></el-option>
+            <el-option v-for="component in components" :label="component.name" :key="component.code" :value="component.code"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col span="10">
+      <el-col :span="10">
         <el-form-item label="父级菜单">
           <el-cascader :options="options" :props="{ checkStrictly: true }" clearable></el-cascader>
         </el-form-item>
@@ -82,6 +81,7 @@
 <script>
 export default {
     name: 'MenuEditPage',
+    pageName:"菜单编辑页面",
     data() {
       return {
         form: {
@@ -288,12 +288,13 @@ export default {
             value: 'jiaohu',
             label: '组件交互文档'
           }]
-        }]
+        }],
+        components: this.$componentUtils.getComponentList()
       }
     },
     methods:{
         onSubmit(){
-            
+            console.log(this.$componentUtils.getComponentList())
         }
     }
 }

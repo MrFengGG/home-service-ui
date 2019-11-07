@@ -10,7 +10,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import components from '../../router/components'
   import request from '../../util/request'
   import MenuItem from '../menu/MenuItem'
 
@@ -47,26 +46,9 @@
         request.get(this.menuUrl).then(data =>{
           if(data.code > 0){
               this.menuList = data.data;
-              this.$router.$addRoutes(this.menuToRouters(data.data));
+              this.$router.$addRoutes(this.$componentUtils.getRouterList(data.data));
           }
         })
-      },
-      menuToRouters(menuList){
-        let routers = [];
-        for(let menu of menuList){
-          if(menu.menu_type == 0){
-            routers.push({
-                name : menu.path,
-                component : components[menu.component_name],
-                path : menu.path,
-                props : menu.component_param
-            });
-          }
-          if(menu.childList){
-            routers = routers.concat(this.menuToRouters(menu.childList))
-          }
-        }
-        return routers;
       }
     }
   }

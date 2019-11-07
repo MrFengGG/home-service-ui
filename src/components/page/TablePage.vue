@@ -76,6 +76,7 @@ export default {
         }
     },
     name: 'TablePage',
+    pageName: '通用数据列表',
     data() {
         return {
             formInline: {
