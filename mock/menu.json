@@ -1,24 +1,23 @@
 [
     {
-        "menu_name" : "菜单管理",
+        "menuName" : "菜单管理",
         "code" : "menu",
-        "component_name" : "",
-        "conponent_param" : "json",
-        "menu_group_code" : "plat",
+        "componentName" : "",
+        "componentParam" : "json",
+        "menuGroupCode" : "plat",
         "icon" : "el-icon-menu",
-        "menu_type" : "1",
+        "menuType" : "1",
         "id" : 1,
         "childList" : [
             {
-                "menu_name" : "菜单管理",
+                "menuName" : "菜单管理",
                 "code" : "menu-menuList",
-                "component_name" : "TablePage",
-                "conponent_param" : "json",
-                "menu_group_code" : "plat",
-                "menu_type" : "0",
+                "componentName" : "TablePage",
+                "menuGroupCode" : "plat",
+                "menuType" : "0",
                 "path" : "/menu/list",
                 "id" : 2,
-                "component_param" : {
+                "componentParam" : {
                     "tableHead" : [
                         {
                             "code" : "code",
@@ -50,48 +49,44 @@
                     }
                 }
             },{
-                "menu_name" : "组件管理",
+                "menuName" : "组件管理",
                 "code" : "componentList",
-                "component_name" : "MenuEditPage",
-                "conponent_param" : "json",
-                "menu_group_code" : "plat",
-                "menu_type" : "0",
+                "componentName" : "MenuEditPage",
+                "menuGroupCode" : "plat",
+                "menuType" : "0",
                 "path" : "/menu/component",
                 "id" : 3,
-                "component_param" : {}
+                "componentParam" : {}
             }
 
         ]
     },{
-        "menu_name" : "用户管理",
+        "menuName" : "用户管理",
         "code" : "sysUser",
-        "component_name" : "test",
-        "conponent_param" : "json",
-        "menu_group_code" : "plat",
-        "menu_type" : "1",
+        "componentName" : "test",
+        "menuGroupCode" : "plat",
+        "menuType" : "1",
         "icon" : "el-icon-user",
         "id" : 4,
         "childList" : [
             {
-                "menu_name" : "用户管理",
-                "code" : "menuList",
-                "component_name" : "TablePage",
-                "conponent_param" : "json",
-                "menu_group_code" : "plat",
-                "menu_type" : "0",
+                "menuName" : "用户管理",
+                "code" : "userList",
+                "componentName" : "TablePage",
+                "menuGroupCode" : "plat",
+                "menuType" : "0",
                 "path" : "/user/list",
                 "id" : 5,
-                "component_param" : {}
+                "componentParam" : {}
             },{
-                "menu_name" : "权限管理",
+                "menuName" : "权限管理",
                 "code" : "roleList",
-                "component_name" : "TablePage",
-                "conponent_param" : "json",
-                "menu_group_code" : "plat",
-                "menu_type" : "0",
+                "componentName" : "TablePage",
+                "menuGroupCode" : "plat",
+                "menuType" : "0",
                 "path" : "/user/role",
                 "id" : 6,
-                "component_param" : {}
+                "componentParam" : {}
             }
         ]
     }

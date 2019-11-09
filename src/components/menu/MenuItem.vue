@@ -4,14 +4,14 @@
             <el-submenu :index="menu.code" v-if="menu.childList">
                 <template slot="title">
                     <i :class="menu.icon"></i>
-                    <span slot="title">{{menu.menu_name}}</span>
+                    <span slot="title">{{menu.menuName}}</span>
                 </template>
                 <MenuItem :menuList="menu.childList"></MenuItem>
             </el-submenu>
             <el-menu-item v-else :index="menu.path">
                 <template slot="title">
                     <i :class="menu.icon"></i>
-                    <span slot="title">{{menu.menu_name}}</span>       
+                    <span slot="title">{{menu.menuName}}</span>       
                 </template>
             </el-menu-item>
         </div>

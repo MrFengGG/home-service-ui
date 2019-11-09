@@ -45,10 +45,12 @@
       handMenuGroupChange(menuGroup){
         request.get(this.menuUrl).then(data =>{
           if(data.code > 0){
+            console.log(data.data)
+            console.log(this.$componentUtils.getRouterList(data.data))
               this.menuList = data.data;
               this.$router.$addRoutes(this.$componentUtils.getRouterList(data.data));
           }
-        })
+        });
       }
     }
   }

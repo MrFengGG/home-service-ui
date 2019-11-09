@@ -1,9 +1,9 @@
 [
     {
-        "grop_name" : "管理平台",
+        "groupName" : "管理平台",
         "code" : "plat"
     },{
-        "grop_name" : "crm系统",
+        "groupName" : "crm系统",
         "code" : "crm"
     }
 ]
