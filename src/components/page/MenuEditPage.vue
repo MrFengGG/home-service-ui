@@ -20,14 +20,7 @@
       </el-col>
       <el-col :span="10">
         <el-form-item label="菜单图标">
-          <el-select v-model="form.icon" placeholder="请选择菜单类型">
-            <el-option value="shanghai">
-              <i class="el-icon-edit"></i>
-            </el-option>
-            <el-option label="跳转菜单" value="beijing">
-              <i class="el-icon-edit"></i>
-            </el-option>
-          </el-select>
+          <icon-picker v-model="form.icon"></icon-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -62,11 +55,14 @@
           <el-cascader v-model="form.parentCode" :options="options" :props="{ checkStrictly: true,label: 'menuName', value: 'code', children: 'childList'}" clearable></el-cascader>
         </el-form-item>
       </el-col>
-    </el-row><span>组件元属性设置</span>
+    </el-row>
+    <span>组件元属性设置</span>
     <el-divider><i class="el-icon-s-tools"></i></el-divider>
+    <el-row>
+      <vue-json-editor v-model="form.componentParam"></vue-json-editor>
+    </el-row>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
-      <el-button>取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -77,31 +73,46 @@
     .el-select,.el-cascader{
         width : 100%
     } 
+    div.jsoneditor-menu{
+      background-color: #909399;
+      border-bottom: #909399
+    }
+    div.jsoneditor{
+      border: 1px solid #909399;
+    }
+    div.jsoneditor-tree{
+      min-height: 400px;
+    }
+
+    
+  
 </style>
 <script>
 import request from '../../util/request'
+import vueJsonEditor from 'vue-json-editor'
 export default {
     name: 'MenuEditPage',
     pageName:"菜单编辑页面",
+    components:{
+      vueJsonEditor
+    },
     data() {
       return {
         form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          componentName: '',
+          componentParam: {}
         },
         options: [],
-        components: this.$componentUtils.getComponentList()
+        components: this.$componentUtils.getComponentList(),
       }
     },
     methods:{
         onSubmit(){
-          console.log(this.form)
+          request.post('/menu/addMenu', this.form).then(data => {
+            if(data.code > 0){
+
+            }
+          })
         },
         initMenuSelector(){
           request.get('/menu/getAllMenu').then(data =>{
@@ -109,10 +120,19 @@ export default {
               this.options = data.data;
             }
           });
+        },
+        handComponentChange(componentName){
+          this.form.componentParam = this.$componentUtils.getComponentSchemaByCode(componentName);
+          console.log(this.$componentUtils.getComponentSchemaByCode(componentName))
         }
     },
     created(){
       this.initMenuSelector();
+    },
+    watch: {
+      'form.componentName': function(val){
+        this.handComponentChange(val)
+      }
     }
 }
 </script>

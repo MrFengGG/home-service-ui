@@ -5,7 +5,7 @@
         "componentName" : "",
         "componentParam" : "json",
         "menuGroupCode" : "plat",
-        "icon" : "el-icon-menu",
+        "icon" : "fa fa-music",
         "menuType" : "1",
         "id" : 1,
         "childList" : [
@@ -45,7 +45,7 @@
                     "submitUrl" : "/menu/pageQueryMenu",
                     "treeSet" : {
                         "children" : "childList",
-                        "hasChildren" : true
+                        "hasChildren" : false
                     }
                 }
             },{

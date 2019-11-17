@@ -16,12 +16,39 @@ const getComponentList = function(){
     for(let i in components){
         result.push({code: i, name:components[i]['pageName']});
     }
-    console.log(result)
     return result;
 }
 
 const getComponent = function(componentCode){
     return components[componentCode];
+}
+
+
+const getComponentSchema = function(component){
+    const props = component.props;
+    let result = {};
+    for(let key in props){
+        result[key] = defaultValue(props[key]['type']);
+    }
+    return result;
+}
+
+const defaultValue = function(elementType){
+    if(elementType == Object){
+        return {};
+    }else if(elementType == Number){
+        return 0;
+    }else if(elementType == String){
+        return '';
+    }else if(elementType == Array){
+        return [];
+    }else{
+        return null;
+    }
+}
+
+const getComponentSchemaByCode = function(componentCode){
+    return getComponentSchema(getComponent(componentCode));
 }
 
 const getRouter = function(menu){
@@ -51,5 +78,6 @@ export default {
     getComponent,
     getComponentList,
     getRouter,
-    getRouterList
+    getRouterList,
+    getComponentSchemaByCode
 };

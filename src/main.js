@@ -5,11 +5,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import store from './store/store'
 import componentUtils from './util/components'
-require('../mock/mock.js')
+import 'font-awesome/css/font-awesome.min.css' 
+import './assets/css/main.css'
+import iconPicker from 'vue-fontawesome-elementui-icon-picker';
+
+//require('../mock/mock.js')
 
 Vue.prototype.$componentUtils = componentUtils;
 
 Vue.use(ElementUI)
+Vue.use(iconPicker);
 Vue.config.productionTip = false
 
 new Vue({

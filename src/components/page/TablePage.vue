@@ -1,6 +1,9 @@
 <template>
     <div>
         <el-form :model="formInline" label-width="130px">
+            <el-row v-for="(item,index) in queryItem" :key="index">
+
+            </el-row>
             <el-row>
                 <el-col :span="10">
                     <el-form-item label="审批人" class="input-item">
@@ -63,13 +66,16 @@ import request from '../../util/request'
 export default {
     props : {
         submitUrl:{
-            type: String
+            type: String,
+            title: '表格数据接口'
         },
         queryItem : {
-            type: Array
+            type: Array,
+            title: '查询项'
         },
         tableHead : {
-            type: Array
+            type: Array,
+            title: '表头'
         },
         treeSet : {
             type: Object
@@ -111,6 +117,15 @@ export default {
         handleCurrentChange(pageNo){
             this.pageNo = pageNo;
             this.query();
+        }
+    },
+    computed: {
+        rowFormItem:function(){
+            let rowItem = [];
+            for(item in this.queryItem){
+                
+            }
+            return rowItem;
         }
     }
 

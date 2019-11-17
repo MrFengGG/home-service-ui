@@ -1,7 +1,7 @@
 import Mock from 'mockjs';
-var userList = require("./user.json")
-var menuGroupList = require("./menuGroup.json")
-var menuList = require("./menu.json")
+let userList = require("./user.json")
+let menuGroupList = require("./menuGroup.json")
+let menuList = require("./menu.json")
 
 const successResult = function(obj){
     return {
@@ -25,7 +25,14 @@ Mock.mock('/menu/getAllGroup', 'get', function(){
     return successResult(menuGroupList);
 })
 Mock.mock('/menu/getAllMenu', 'get', function(req){
+    console.log(menuList);
     return successResult(menuList);
+})
+Mock.mock('/menu/addMenu', 'post', function(req){
+    const param = JSON.parse(req.body);
+    menuList.push(param);
+    console.log(menuList);
+    return successResult();
 })
 Mock.mock('/menu/pageQueryMenu','post', function(req){
     const param = JSON.parse(req.body)

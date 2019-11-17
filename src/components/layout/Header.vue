@@ -28,7 +28,7 @@
       props : {
           groupUrl : {
             type: String,
-            default: "/menu/getAllGroup"
+            default: "api/menu/getAllGroup"
           }
       },
       data(){

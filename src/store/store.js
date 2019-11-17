@@ -7,7 +7,7 @@ const state = {
         isSlideCollpase : false,
     },
     contextData : {
-        token : "",
+        token : "855af28f-a99c-4bf4-9315-66cdec904b69",
         menuGroup : "plat"
     }
 }
