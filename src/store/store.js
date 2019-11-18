@@ -7,7 +7,7 @@ const state = {
         isSlideCollpase : false,
     },
     contextData : {
-        token : "855af28f-a99c-4bf4-9315-66cdec904b69",
+        token : "12",
         menuGroup : "plat"
     }
 }
@@ -48,6 +48,9 @@ const actions = {
     },
     changeMenuGroup({commit}, groupName){
         commit('changeMenuGroup', groupName);
+    },
+    changeToken({commit}, token){
+        commit('refreshToken', token);
     }
 }
 

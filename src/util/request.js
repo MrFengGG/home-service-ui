@@ -16,7 +16,11 @@ const get = function(url, param){
     })
 }
 const post = function(url, param){
-    return axios.post(url, param, commonHeader()).then(response => {
+    const config = {
+        params:param,
+        headers:commonHeader()
+    }
+    return axios.post(url, config).then(response => {
         return new Promise(function(resolve, reject){
             if(response.status == 200){
                 resolve(response.data);
