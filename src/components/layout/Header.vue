@@ -10,6 +10,21 @@
                 </el-menu>
             </el-col>
             <el-col :span="4">
+                <el-popover
+                    placement="bottom"
+                    width="300"
+                    trigger="click">
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span>卡片名称</span>
+                            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                        </div>
+                        <div v-for="o in 4" :key="o" class="text item">
+                            {{'列表内容 ' + o }}
+                        </div>
+                    </el-card>
+                    <el-avatar class="headImage" shape="square" size="medium" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" slot="reference"></el-avatar>
+                    </el-popover>
             </el-col>
         </el-row>
     </div>
@@ -18,6 +33,9 @@
     .left-head-button{
         margin-top:15px;
         margin-left:0px;
+    }
+    .headImage{
+        margin-top:11px;
     }
 </style>
 <script>

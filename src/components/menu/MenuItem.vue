@@ -8,7 +8,7 @@
                 </template>
                 <MenuItem :menuList="menu.childList"></MenuItem>
             </el-submenu>
-            <el-menu-item v-else :index="menu.path">
+            <el-menu-item v-else :index="menu.menuPath">
                 <template slot="title">
                     <i :class="menu.icon"></i>
                     <span slot="title">{{menu.menuName}}</span>       

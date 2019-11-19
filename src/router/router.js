@@ -43,6 +43,9 @@ router.$addRoutes = (routers) => {
     for(let noCacheRouter of noCacheRouters){
         cacheRoutes[noCacheRouter.name] = noCacheRouters;
     }
-    routes[1]['children'].push(noCacheRouters)
+    routes[1]['children'] = [...noCacheRouters, ...routes[1]['children']]
+    console.log(routes);
+    router.addRoutes(routes);
 };
+
 export default router;

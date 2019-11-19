@@ -5,7 +5,7 @@
 
 import MenuEditPage from '../components/page/MenuEditPage'
 import TablePage from '../components/page/TablePage'
-
+console.log(MenuEditPage)
 const components = {
     MenuEditPage,
     TablePage
@@ -20,6 +20,8 @@ const getComponentList = function(){
 }
 
 const getComponent = function(componentCode){
+    console.log(componentCode);
+    console.log(components)
     return components[componentCode];
 }
 
@@ -53,10 +55,9 @@ const getComponentSchemaByCode = function(componentCode){
 
 const getRouter = function(menu){
     return {
-        name : menu.path,
         component : getComponent(menu.componentName),
-        path : menu.path,
-        props : menu.componentParam
+        path : menu.menuPath,
+        props : {}
     };
 }
 

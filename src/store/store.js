@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import request from '../util/request'
+import router from '../router/router'
+import componentUtils from '../util/components'
 
 Vue.use(Vuex)
 const state = {
@@ -7,8 +10,10 @@ const state = {
         isSlideCollpase : false,
     },
     contextData : {
-        token : "12",
-        menuGroup : "plat"
+        token : sessionStorage.getItem('token'),
+        menuGroup : "plat",
+        menuList : [],
+        initMenu : false
     }
 }
 
@@ -21,6 +26,9 @@ const getters = {
     },
     token : function(state){
         return state.contextData.token;
+    },
+    hasInitMenu : function(state){
+        return state.contextData.initMenu;
     }
 }
 
@@ -35,10 +43,14 @@ const mutations = {
         state.contextConfig.isSlideCollapse = false;
     },
     refreshToken(state, token){
-        state.contextData.token = token;
+        sessionStorage.setItem("token", token);
     },
     changeMenuGroup(state, groupName){
         state.contextData.menuGroup = groupName;
+    },
+    initMenu(state, menuList){
+        state.contextData.menuList = menuList;
+        state.contextData.initMenu = true;
     }
 }
 
@@ -51,6 +63,14 @@ const actions = {
     },
     changeToken({commit}, token){
         commit('refreshToken', token);
+    },
+    initMenu({commit}){
+        return request.get('/api/menu/getAllMenu',{group: state.contextData.menuGroup}).then(data =>{
+            if(data.code > 0){
+                router.$addRoutes(componentUtils.getRouterList(data.data));
+                commit('initMenu',data.data);
+            }
+        });
     }
 }
 

@@ -16,19 +16,28 @@ Vue.prototype.$componentUtils = componentUtils;
 Vue.use(ElementUI)
 Vue.use(iconPicker);
 Vue.config.productionTip = false
+
 router.beforeEach((to, from, next) => {
-  if(!to.meta.needLogin || store.getters.token){
-    next();
-  }else{
-    console.log(111)
-    next({
-      path: '/login',
-      query: {
-        redirect: to.fullPath
+    if(to.meta.needLogin && !store.getters.token){
+      //登录拦截
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    }else{
+      if(!store.getters.hasInitMenu){
+        //刷新页面重载路由
+        store.dispatch('initMenu').then(function(){
+          next({ ...to, replace: true });
+        })
+      }else{
+        next();
       }
-    })
-  }
-})
+    }
+});
+
 
 new Vue({
   router,

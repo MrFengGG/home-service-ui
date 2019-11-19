@@ -83,9 +83,6 @@
     div.jsoneditor-tree{
       min-height: 400px;
     }
-
-    
-  
 </style>
 <script>
 import request from '../../util/request'
@@ -123,7 +120,6 @@ export default {
         },
         handComponentChange(componentName){
           this.form.componentParam = this.$componentUtils.getComponentSchemaByCode(componentName);
-          console.log(this.$componentUtils.getComponentSchemaByCode(componentName))
         }
     },
     created(){
