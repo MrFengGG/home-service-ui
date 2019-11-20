@@ -62,7 +62,6 @@
     } 
 </style>
 <script>
-import request from '../../util/request'
 export default {
     props : {
         submitUrl:{
@@ -99,7 +98,7 @@ export default {
     },
     methods : {
         query(){
-            request.post(this.submitUrl, {
+            this.requests.post(this.submitUrl, {
                 ...this.formInline,
                 pageNo : this.pageNo,
                 pageSize : this.pageSize

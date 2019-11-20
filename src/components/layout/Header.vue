@@ -40,7 +40,6 @@
 </style>
 <script>
   import {mapActions, mapGetters} from 'vuex'
-  import request from '../../util/request'
   export default {
       name : 'Header',
       props : {
@@ -58,7 +57,7 @@
         ])
       },
       created(){
-        request.get(this.groupUrl).then(data =>{
+        this.$requests.get(this.groupUrl).then(data =>{
             if(data.code > 0){
                 this.menuList = data.data;
             }

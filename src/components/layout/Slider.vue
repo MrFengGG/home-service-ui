@@ -10,7 +10,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import request from '../../util/request'
   import MenuItem from '../menu/MenuItem'
 
   export default {
@@ -43,10 +42,10 @@
     },
     methods: {
       handMenuGroupChange(menuGroup){
-        request.get(this.menuUrl).then(data =>{
+        this.$requests.get(this.menuUrl).then(data =>{
           if(data.code > 0){
               this.menuList = data.data;
-              this.$router.$addRoutes(this.$componentUtils.getRouterList(data.data));
+              this.$router.$accessMenuList(data.data);
           }
         });
       }

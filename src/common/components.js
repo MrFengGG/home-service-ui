@@ -1,8 +1,3 @@
-
-/**
- * 组件工具类,提供一些组件转换工具
- */
-
 import MenuEditPage from '../components/page/MenuEditPage'
 import TablePage from '../components/page/TablePage'
 console.log(MenuEditPage)
@@ -53,32 +48,9 @@ const getComponentSchemaByCode = function(componentCode){
     return getComponentSchema(getComponent(componentCode));
 }
 
-const getRouter = function(menu){
-    return {
-        component : getComponent(menu.componentName),
-        path : menu.menuPath,
-        props : {}
-    };
-}
-
-const getRouterList = function(menuList){
-    let routers = [];
-    for(let menu of menuList){
-      if(menu.menuType == 0){
-        routers.push(getRouter(menu));
-      }
-      if(menu.childList){
-        routers = routers.concat(getRouterList(menu.childList))
-      }
-    }
-    return routers;
-
-}
 
 export default {
     getComponent,
     getComponentList,
-    getRouter,
-    getRouterList,
     getComponentSchemaByCode
 };

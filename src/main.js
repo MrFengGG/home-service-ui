@@ -4,18 +4,21 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import store from './store/store'
-import componentUtils from './util/components'
+import components from './common/components'
 import 'font-awesome/css/font-awesome.min.css' 
 import './assets/css/main.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker';
 import VueParticles from 'vue-particles'  
+import requests from './common/request'
 
 //require('../mock/mock.js')
-Vue.use(VueParticles)  
-Vue.prototype.$componentUtils = componentUtils;
-Vue.use(ElementUI)
+Vue.use(VueParticles);
+Vue.use(ElementUI);
 Vue.use(iconPicker);
 Vue.config.productionTip = false
+
+Vue.prototype.$components = components;
+Vue.prototype.$requests = requests;
 
 router.beforeEach((to, from, next) => {
     if(to.meta.needLogin && !store.getters.token){

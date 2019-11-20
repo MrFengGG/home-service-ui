@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import request from '../util/request'
+import request from '../common/request'
 import router from '../router/router'
-import componentUtils from '../util/components'
+import componentUtils from '../common/components'
 
 Vue.use(Vuex)
 const state = {
@@ -45,6 +45,9 @@ const mutations = {
     refreshToken(state, token){
         sessionStorage.setItem("token", token);
     },
+    clearToken(state){
+        sessionStorage.removeItem("token");
+    },
     changeMenuGroup(state, groupName){
         state.contextData.menuGroup = groupName;
     },
@@ -64,9 +67,12 @@ const actions = {
     changeToken({commit}, token){
         commit('refreshToken', token);
     },
+    clearToken({commit}){
+        commit('clearToken');
+    },
     initMenu({commit}){
         return request.get('/api/menu/getAllMenu',{group: state.contextData.menuGroup}).then(data =>{
-            if(data.code > 0){
+            if(data.code == 200){
                 router.$addRoutes(componentUtils.getRouterList(data.data));
                 commit('initMenu',data.data);
             }

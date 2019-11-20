@@ -5,8 +5,6 @@ import MenuEditPage from "../components/page/MenuEditPage"
 import LoginPage from '../components/page/LoginPage'
 import Home from '../components/page/Home'
 Vue.use(Router);
-
-const cacheRoutes = {};
 const routes = [
     { 
         path: '/', redirect: '/home'
@@ -36,16 +34,34 @@ const routes = [
 const router = new Router({
     routes,
 });
-router.$addRoutes = (routers) => {
-    const noCacheRouters = routers.filter(router => {
-        return !(router.name in cacheRoutes);
-    });
-    for(let noCacheRouter of noCacheRouters){
-        cacheRoutes[noCacheRouter.name] = noCacheRouters;
+const getRouter = function(menu){
+    return {
+        component : getComponent(menu.componentName),
+        path : menu.menuPath,
+        props : {}
+    };
+}
+const getRouterList = function(menuList){
+    let routers = [];
+    for(let menu of menuList){
+      if(menu.menuType == 0){
+        routers.push(getRouter(menu));
+      }
+      if(menu.childList){
+        routers = routers.concat(getRouterList(menu.childList))
+      }
     }
-    routes[1]['children'] = [...noCacheRouters, ...routes[1]['children']]
-    console.log(routes);
+    return routers;
+}
+//增加router
+router.$addRoutes = function(routers){
+    routes[1]['children'] = [...routers, ...routes[1]['children']]
     router.addRoutes(routes);
 };
+//根据菜单增加router
+router.$accessMenuList = function(menuList){
+    const routers = getRouterList(menuList);
+    this.$addRoutes(routers);
+}
 
 export default router;

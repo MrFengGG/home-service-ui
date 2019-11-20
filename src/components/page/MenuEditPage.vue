@@ -85,7 +85,6 @@
     }
 </style>
 <script>
-import request from '../../util/request'
 import vueJsonEditor from 'vue-json-editor'
 export default {
     name: 'MenuEditPage',
@@ -100,19 +99,19 @@ export default {
           componentParam: {}
         },
         options: [],
-        components: this.$componentUtils.getComponentList(),
+        components: this.$components.getComponentList(),
       }
     },
     methods:{
         onSubmit(){
-          request.post('/menu/addMenu', this.form).then(data => {
+          this.$requests.post('/menu/addMenu', this.form).then(data => {
             if(data.code > 0){
 
             }
           })
         },
         initMenuSelector(){
-          request.get('/menu/getAllMenu').then(data =>{
+          this.$requests.get('/menu/getAllMenu').then(data =>{
             if(data.code > 0){
               this.options = data.data;
             }

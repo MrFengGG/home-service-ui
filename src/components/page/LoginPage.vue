@@ -40,8 +40,7 @@
     }
 </style>
 <script>
-import request from '../../util/request'
-  import {mapActions} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
     name: 'LoginPage',
     pageName:"登陆页面",
@@ -55,7 +54,7 @@ export default {
             "changeToken"
         ]),
         handleSubmit(){
-            request.get('/api/auth/accessToken',this.form).then(data =>{
+            this.$requests.get('/api/auth/accessToken',this.form).then(data =>{
                 if(data.code <= 0){
                     this.$message({
                         type: 'warning',
