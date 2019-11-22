@@ -22,7 +22,6 @@ Vue.prototype.$requests = requests;
 
 router.beforeEach((to, from, next) => {
     if(to.meta.needLogin && !store.getters.token){
-      //登录拦截
       next({
         path: '/login',
         query: {
@@ -30,14 +29,12 @@ router.beforeEach((to, from, next) => {
         }
       });
     }else{
-      if(!store.getters.hasInitMenu){
-        //刷新页面重载路由
+      if(!store.getters.hasInitMenu && store.getters.token){
         store.dispatch('initMenu').then(function(){
           next({ ...to, replace: true });
-        })
-      }else{
-        next();
+        });
       }
+      next();
     }
 });
 

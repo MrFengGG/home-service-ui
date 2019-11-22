@@ -62,11 +62,9 @@ export default {
                     });
                 }else{
                     this.changeToken(data.data.token)
-                    
                     this.$router.push('/');
                 }
             });
-            console.log(this.form)
         }
     }
 }

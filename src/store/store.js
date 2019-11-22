@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import request from '../common/request'
 import router from '../router/router'
-import componentUtils from '../common/components'
 
 Vue.use(Vuex)
 const state = {
@@ -10,8 +9,9 @@ const state = {
         isSlideCollpase : false,
     },
     contextData : {
-        token : sessionStorage.getItem('token'),
+        token : sessionStorage.getItem('token') || '',
         menuGroup : "plat",
+        menuKey : sessionStorage.getItem('menuKey'),
         menuList : [],
         initMenu : false
     }
@@ -29,6 +29,10 @@ const getters = {
     },
     hasInitMenu : function(state){
         return state.contextData.initMenu;
+    },
+    currentMenuKey: function(state){
+        console.log("menuKey:" + state.contextData.menuKey)
+        return state.contextData.menuKey;
     }
 }
 
@@ -44,9 +48,11 @@ const mutations = {
     },
     refreshToken(state, token){
         sessionStorage.setItem("token", token);
+        state.contextData.token = token;
     },
     clearToken(state){
         sessionStorage.removeItem("token");
+        state.contextData.token = '';
     },
     changeMenuGroup(state, groupName){
         state.contextData.menuGroup = groupName;
@@ -54,6 +60,11 @@ const mutations = {
     initMenu(state, menuList){
         state.contextData.menuList = menuList;
         state.contextData.initMenu = true;
+    },
+    changeMenu(state, menuKey){
+        console.log("haha" + menuKey)
+        state.contextData.menuKey = menuKey;
+        sessionStorage.setItem("menuKey", menuKey);
     }
 }
 
@@ -72,11 +83,20 @@ const actions = {
     },
     initMenu({commit}){
         return request.get('/api/menu/getAllMenu',{group: state.contextData.menuGroup}).then(data =>{
-            if(data.code == 200){
-                router.$accessMenuList(data.data);
-                commit('initMenu',data.data);
-            }
+            return new Promise(function(resolve, reject){
+                if(data.code == 200){
+                    router.$accessMenuList(data.data || []);
+                    commit('initMenu',data.data);
+                    resolve();
+                }else{
+                    reject(data);
+                }
+            });
         });
+    },
+    changeMenu({commit}, menuKey){
+        console.log("99:"+menuKey)
+        commit('changeMenu', menuKey);
     }
 }
 

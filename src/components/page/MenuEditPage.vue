@@ -36,8 +36,7 @@
       <el-col :span="10">
         <el-form-item label="菜单组">
           <el-select v-model="form.menuGroupCode" placeholder="请选择菜单组">
-            <el-option label="父级菜单" value="shanghai"></el-option>
-            <el-option label="跳转菜单" value="beijing"></el-option>
+            <el-option label="管理平台" value="plat"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -104,14 +103,14 @@ export default {
     },
     methods:{
         onSubmit(){
-          this.$requests.post('/menu/addMenu', this.form).then(data => {
+          this.$requests.post('/api/menu/addMenu', this.form).then(data => {
             if(data.code > 0){
 
             }
           })
         },
         initMenuSelector(){
-          this.$requests.get('/menu/getAllMenu').then(data =>{
+          this.$requests.get('/api/menu/getAllMenu').then(data =>{
             if(data.code > 0){
               this.options = data.data;
             }

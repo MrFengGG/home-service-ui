@@ -1,7 +1,7 @@
 <template>
 <div>
   <el-aside width="auto" style="height:100%">
-      <el-menu class="el-menu-vertical-demo" mode="vertical" :collapse="isSlideCollapse" :router=true>
+      <el-menu class="el-menu-vertical-demo" mode="vertical" :collapse="isSlideCollapse" :router=true :default-active="currentMenuKey" @select="handMenuChange">
         <MenuItem :menuList="menuList"/>
       </el-menu>
   </el-aside>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters,mapActions} from 'vuex'
   import MenuItem from '../menu/MenuItem'
 
   export default {
@@ -29,7 +29,8 @@
     computed: {
       ...mapGetters([
         'isSlideCollapse',
-        'menuGroup'
+        'menuGroup',
+        'currentMenuKey'
       ])
     },
     created : function(){
@@ -48,7 +49,13 @@
               this.$router.$accessMenuList(data.data);
           }
         });
-      }
+      },
+      handMenuChange(index){
+        this.changeMenu(index);
+      },
+      ...mapActions([
+        'changeMenu'
+      ])
     }
   }
 </script>

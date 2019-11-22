@@ -12,9 +12,8 @@ const get = function(url, param){
     return axios.get(url, config).then(response => {
         return new Promise(function(resolve, reject){
             if(response.status == 200){
-                if(response.data.code == 400){
-                    store.dispatch('clearToken');
-                    router.push('/login');
+                if((response.data.code == 400 || response.data.code == 401) && store.getters.token){
+                    handSessionTimeOut();
                 }
                 resolve(response.data);
             }else{
@@ -36,10 +35,26 @@ const post = function(url, param){
     return axios.post(url, config).then(response => {
         return new Promise(function(resolve, reject){
             if(response.status == 200){
+                if(response.data.code == 400 || response.data.code == 401){
+                    store.dispatch('clearToken');
+                    router.push('/login');
+                }
                 resolve(response.data);
             }
         })
     })
+}
+
+const handSessionTimeOut = function(){
+    Message({
+        showClose: true,
+        message: "会话超时",
+        type: 'error'
+    });
+    setTimeout(function(){
+        store.dispatch('clearToken');
+        router.push('/login');
+    },1000);
 }
 export default{
     get,

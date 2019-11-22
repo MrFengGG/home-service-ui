@@ -4,24 +4,17 @@ import Router from "vue-router";
 import MenuEditPage from "../components/page/MenuEditPage"
 import LoginPage from '../components/page/LoginPage'
 import Home from '../components/page/Home'
+import components from '../common/components'
 Vue.use(Router);
 const routes = [
-    { 
-        path: '/', redirect: '/home'
-    },{
-        path: '/home', 
+    {
+        path: '', 
         component: Home, 
         meta: {
-            needLogin: true
+            needLogin: true,
         },
         children: [
-            { 
-                path: '/editMenu', 
-                component: MenuEditPage ,
-                meta: {
-                    needLogin: true
-                }
-            }
+        
         ]
     },{ 
         path: '/login', 
@@ -36,7 +29,7 @@ const router = new Router({
 });
 const getRouter = function(menu){
     return {
-        component : getComponent(menu.componentName),
+        component : components.getComponent(menu.componentName),
         path : menu.menuPath,
         props : {}
     };
@@ -55,12 +48,14 @@ const getRouterList = function(menuList){
 }
 //增加router
 router.$addRoutes = function(routers){
-    routes[1]['children'] = [...routers, ...routes[1]['children']]
+    routes[0]['children'] = [...routers]
     router.addRoutes(routes);
+    console.log(routes)
 };
 //根据菜单增加router
 router.$accessMenuList = function(menuList){
     const routers = getRouterList(menuList);
+
     this.$addRoutes(routers);
 }
 
