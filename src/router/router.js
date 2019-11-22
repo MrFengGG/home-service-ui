@@ -1,7 +1,6 @@
 
 import Vue from "vue";
 import Router from "vue-router";
-import MenuEditPage from "../components/page/MenuEditPage"
 import LoginPage from '../components/page/LoginPage'
 import Home from '../components/page/Home'
 import components from '../common/components'
@@ -14,7 +13,9 @@ const routes = [
             needLogin: true,
         },
         children: [
-        
+            {
+                path: '/index'
+            }
         ]
     },{ 
         path: '/login', 
