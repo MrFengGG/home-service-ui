@@ -73,7 +73,7 @@ const actions = {
     initMenu({commit}){
         return request.get('/api/menu/getAllMenu',{group: state.contextData.menuGroup}).then(data =>{
             if(data.code == 200){
-                router.$addRoutes(componentUtils.getRouterList(data.data));
+                router.$accessMenuList(data.data);
                 commit('initMenu',data.data);
             }
         });
