@@ -7,15 +7,15 @@
         </el-form-item>
       </el-col>
       <el-col :span="10">
-        <el-form-item label="菜单路径">
-          <el-input v-model="form.path"></el-input>
+        <el-form-item label="菜单代码">
+          <el-input v-model="form.code"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="30">
       <el-col :span="10">
-        <el-form-item label="菜单代码">
-          <el-input v-model="form.code"></el-input>
+        <el-form-item label="父级菜单">
+          <el-cascader v-model="form.parentCode" :options="menuList" :props="{ checkStrictly: true,label: 'menuName', value: 'code', children: 'childList'}" clearable></el-cascader>
         </el-form-item>
       </el-col>
       <el-col :span="10">
@@ -36,29 +36,10 @@
       <el-col :span="10">
         <el-form-item label="菜单组">
           <el-select v-model="form.menuGroupCode" placeholder="请选择菜单组">
-            <el-option label="管理平台" value="plat"></el-option>
+            <el-option v-for="menuGroup in menuGroupList" :label="menuGroup.groupName" :key="menuGroup.code" :value="menuGroup.code"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
-    </el-row>
-    <el-row :gutter="30">
-      <el-col :span="10">
-        <el-form-item label="菜单组件">
-          <el-select v-model="form.componentName" placeholder="请选择菜单组件">
-            <el-option v-for="component in components" :label="component.name" :key="component.code" :value="component.code"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="10">
-        <el-form-item label="父级菜单">
-          <el-cascader v-model="form.parentCode" :options="options" :props="{ checkStrictly: true,label: 'menuName', value: 'code', children: 'childList'}" clearable></el-cascader>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <span>组件元属性设置</span>
-    <el-divider><i class="el-icon-s-tools"></i></el-divider>
-    <el-row>
-      <vue-json-editor v-model="form.componentParam"></vue-json-editor>
     </el-row>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -95,10 +76,11 @@ export default {
       return {
         form: {
           componentName: '',
-          componentParam: {}
+
         },
-        options: [],
-        components: this.$components.getComponentList(),
+        menuList: [],
+        menuGroupList: [],
+        pathList: this.$router.getPathSelector()
       }
     },
     methods:{
@@ -112,16 +94,21 @@ export default {
         initMenuSelector(){
           this.$requests.get('/api/menu/getAllMenu').then(data =>{
             if(data.code > 0){
-              this.options = data.data;
+              this.menuList = data.data;
             }
           });
         },
-        handComponentChange(componentName){
-          this.form.componentParam = this.$componentUtils.getComponentSchemaByCode(componentName);
-        }
+        initMEnuGroupSelector(){
+          this.$requests.get('/api/menu/getAllGroup').then(data =>{
+            if(data.code > 0){
+              this.menuGroupList = data.data;
+            }
+          });
+        },
     },
     created(){
       this.initMenuSelector();
+      this.initMEnuGroupSelector();
     },
     watch: {
       'form.componentName': function(val){

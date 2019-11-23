@@ -10,10 +10,10 @@
   </div>
 </template>
 <script>
-import Container from '../layout/Container.vue'
-import TablePage from '../page/TablePage'
-import Slider from '../layout/Slider.vue'
-import Header from '../layout/Header.vue'
+import Container from '../../layout/Container.vue'
+import TablePage from './TablePage'
+import Slider from '../../layout/Slider.vue'
+import Header from '../../layout/Header.vue'
 export default {
   name: 'Home',
   components: {

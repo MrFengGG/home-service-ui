@@ -4,6 +4,7 @@
 <script lang="ts">
 import Vue from 'vue'
 export default {
-    name : "Index"
+    name : "Index",
+    pageName : "平台管理首页"
 }
 </script>

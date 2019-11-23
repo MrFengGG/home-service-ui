@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {mapGetters,mapActions} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import MenuItem from '../menu/MenuItem'
 
   export default {
@@ -44,9 +44,8 @@
     methods: {
       handMenuGroupChange(menuGroup){
         this.$requests.get(this.menuUrl).then(data =>{
-          if(data.code > 0){
+          if(data.code == 200){
               this.menuList = data.data;
-              this.$router.$accessMenuList(data.data);
           }
         });
       },
