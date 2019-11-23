@@ -28,16 +28,11 @@ const get = function(url, param){
     })
 }
 const post = function(url, param){
-    const config = {
-        params:param,
-        headers:commonHeader()
-    }
-    return axios.post(url, config).then(response => {
+    return axios.post(url, param, {headers:commonHeader()}).then(response => {
         return new Promise(function(resolve, reject){
             if(response.status == 200){
                 if(response.data.code == 400 || response.data.code == 401){
-                    store.dispatch('clearToken');
-                    router.push('/login');
+                    handSessionTimeOut()
                 }
                 resolve(response.data);
             }

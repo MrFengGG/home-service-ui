@@ -21,7 +21,7 @@ const MenuEditPage = getPageComponent('/plat/MenuEditPage')
 //菜单页面
 const menuRouter = [
     {
-        path: 'plat/index',
+        path: '/plat/index',
         component: Index,
         meta: {
             needLogin: true,
@@ -76,7 +76,7 @@ router.beforeEach((to, from, next) => {
 
 router.getPathSelector = function(){
     return menuRouter.map(menu => {
-        return {name: menu.meta.routerName, aaa: ''};
+        return {name: menu.meta.routerName, code: menu.path};
     });
 }
 
