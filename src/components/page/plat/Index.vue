@@ -5,6 +5,5 @@
 import Vue from 'vue'
 export default {
     name : "Index",
-    pageName : "平台管理首页"
 }
 </script>

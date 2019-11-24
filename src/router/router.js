@@ -17,6 +17,7 @@ const LoginPage = getPageComponent('/plat/LoginPage');
 const Home = getPageComponent('/plat/Home')
 const Index = getPageComponent('/plat/Index');
 const MenuEditPage = getPageComponent('/plat/MenuEditPage')
+const FormEditPage = getPageComponent('/plat/FormEditPage')
 
 //菜单页面
 const menuRouter = [
@@ -34,6 +35,13 @@ const menuRouter = [
             needLogin: true,
             routerName: '平台管理-菜单编辑'
         },
+    },{
+        path: '/plat/tool/editForm',
+        component: FormEditPage,
+        meta: {
+            needLogin: true,
+            routerName: '平台管理-表单编辑器'
+        }
     }
 ]
 

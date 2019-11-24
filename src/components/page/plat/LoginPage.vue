@@ -43,7 +43,6 @@
 import {mapActions} from 'vuex'
 export default {
     name: 'LoginPage',
-    pageName:"登陆页面",
     data(){
         return {
             form:{}

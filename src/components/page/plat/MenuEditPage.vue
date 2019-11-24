@@ -1,6 +1,5 @@
 <template>
   <el-form ref="form" :model="form" label-width="80px">
-  
     <el-form-item label="菜单名称">
       <el-input v-model="form.menuName"></el-input>
     </el-form-item>
@@ -36,7 +35,8 @@
       <el-input type="textarea" v-model="form.menuDesc"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button type="primary" @click="onSubmit">确定</el-button>
+      <el-button type="primary" @click="onSubmit">确定</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -62,7 +62,6 @@
 import vueJsonEditor from 'vue-json-editor'
 export default {
     name: 'MenuEditPage',
-    pageName:"菜单编辑页面",
     components:{
       vueJsonEditor
     },

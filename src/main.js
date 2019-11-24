@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker';
+import FormMaking from 'form-making'
 
 import router from './router/router'
 import App from './App.vue'
@@ -8,12 +9,14 @@ import store from './store/store'
 import requests from './common/request'
 
 import 'font-awesome/css/font-awesome.min.css' 
-import './assets/css/main.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'form-making/dist/FormMaking.css'
+import './assets/css/main.css'
 
 //require('../mock/mock.js')
 Vue.use(ElementUI);
 Vue.use(iconPicker);
+Vue.use(FormMaking)
 Vue.config.productionTip = false
 
 Vue.prototype.$requests = requests;

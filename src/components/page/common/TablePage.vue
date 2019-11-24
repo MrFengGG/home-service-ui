@@ -66,22 +66,18 @@ export default {
     props : {
         submitUrl:{
             type: String,
-            title: '表格数据接口'
         },
         queryItem : {
             type: Array,
-            title: '查询项'
         },
         tableHead : {
             type: Array,
-            title: '表头'
         },
         treeSet : {
             type: Object
         }
     },
     name: 'TablePage',
-    pageName: '通用数据列表',
     data() {
         return {
             formInline: {
