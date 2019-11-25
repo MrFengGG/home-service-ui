@@ -14,10 +14,11 @@ const getPageComponent = function(pagePath){
 }
 
 const LoginPage = getPageComponent('/plat/LoginPage');
-const Home = getPageComponent('/plat/Home')
+const Home = getPageComponent('/plat/Home');
 const Index = getPageComponent('/plat/Index');
-const MenuEditPage = getPageComponent('/plat/MenuEditPage')
-const FormEditPage = getPageComponent('/plat/FormEditPage')
+const MenuEditPage = getPageComponent('/plat/MenuEditPage');
+const FormEditPage = getPageComponent('/plat/FormEditPage');
+const MenuListPage = getPageComponent('/plat/MenuListPage');
 
 //菜单页面
 const menuRouter = [
@@ -41,6 +42,13 @@ const menuRouter = [
         meta: {
             needLogin: true,
             routerName: '平台管理-表单编辑器'
+        }
+    },{
+        path: '/plat/menu/list',
+        component: MenuListPage,
+        meta: {
+            needLogin: true,
+            routerName: '平台管理-菜单列表'
         }
     }
 ]

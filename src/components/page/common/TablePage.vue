@@ -1,43 +1,6 @@
 <template>
     <div>
-        <el-form :model="formInline" label-width="130px">
-            <el-row v-for="(item,index) in queryItem" :key="index">
-
-            </el-row>
-            <el-row>
-                <el-col :span="10">
-                    <el-form-item label="审批人" class="input-item">
-                        <el-input v-model="formInline.user" placeholder="审批人"  class="inner-input"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                    <el-form-item label="活动区域" class="input-item">
-                        <el-select v-model="formInline.region" placeholder="活动区域" class="inner-input">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="10">
-                    <el-form-item label="审批人士大夫但是" class="input-item">
-                        <el-input v-model="formInline.user" placeholder="审批人" class="inner-input"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                    <el-form-item label="活动区域" class="input-item">
-                        <el-select v-model="formInline.region" placeholder="活动区域"  class="inner-input">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-form-item>
-                <el-button type="primary" @click="query" style="margin-left:70%">查询</el-button>
-            </el-form-item>
-        </el-form>
+        <form-create v-model="fApi" :rule="rule" :option="option"></form-create>
         <el-table :data="tableData" :tree-props="treeSet" row-key="id" border>
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
         </el-table>
@@ -66,12 +29,11 @@ export default {
     props : {
         submitUrl:{
             type: String,
-        },
-        queryItem : {
-            type: Array,
+            required: true
         },
         tableHead : {
             type: Array,
+            required: true
         },
         treeSet : {
             type: Object
@@ -87,6 +49,23 @@ export default {
             pageNo : 1,
             pageSize : 10,
             total : 0,
+            fApi:{
+
+            },
+            rule:[{
+                    type:'input',
+                    field:'goods_name',
+                    title:'商品名称'
+                },{
+                    type:'datePicker',
+                    field:'created_at',
+                    title:'创建时间'
+                }],
+            option:{
+                onSubmit:function (formData) {
+                    alert(formData);
+                }
+            }
         }  
     },
     created : function(){
@@ -94,7 +73,7 @@ export default {
     },
     methods : {
         query(){
-            this.requests.post(this.submitUrl, {
+            this.$requests.post(this.submitUrl, {
                 ...this.formInline,
                 pageNo : this.pageNo,
                 pageSize : this.pageSize
