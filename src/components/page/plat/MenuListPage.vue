@@ -1,5 +1,5 @@
 <template>
-    <TablePage :submitUrl="submitUrl" :tableHead="tableHead" :treeSet="treeSet"/>
+    <TablePage :submitUrl="submitUrl" :tableHead="tableHead" :treeSet="treeSet" :rule="rule"/>
 </template>
 <script>
 import TablePage from '../common/TablePage'
@@ -49,7 +49,48 @@ export default {
             ],
             treeSet: {
                 children: 'childList'
-            }
+            },
+            rule:[{
+                    type: 'el-row',
+                    native: true,
+                    children: [{
+                            type:'input',
+                            field:'menuName',
+                            title:'菜单名称',
+                            col:{
+                                span: 10
+                            }
+                        },{
+                            type:'DatePicker',
+                            field:'created_at',
+                            title:'创建时间',
+                            col:{
+                                span:10
+                            },
+                            props: {
+                                type: 'datetimerange',
+                                rangeSeparator: '至'
+                            }
+                        }]
+                    },{
+                    type: 'el-row',
+                    native: true,
+                    children: [{
+                            type: 'el-button',
+                            on: {
+                                click: function(){
+                                    $f.submit();
+                                    //或者
+                                    $f.resetFields();
+                                }
+                            },
+                            col: {
+                                span:3,
+                                push: 1
+                            },
+                            children: ['查询']
+                    }]
+                }]
         }
     }
 }

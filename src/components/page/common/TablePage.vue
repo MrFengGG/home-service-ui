@@ -37,6 +37,9 @@ export default {
         },
         treeSet : {
             type: Object
+        },
+        rule: {
+            type: Array
         }
     },
     name: 'TablePage',
@@ -56,26 +59,10 @@ export default {
                     }
                 }
             },
-            rule:[{
-                    type:'input',
-                    field:'goods_name',
-                    title:'商品名称',
-                    col:{
-                        span:12
-                    }
-                },{
-                    type:'datePicker',
-                    field:'created_at',
-                    title:'创建时间',
-                    col:{
-                        span:12
-                    }
-                }],
             option:{
-                onSubmit:function (formData) {
-                    alert(formData);
-                }
-            }
+                submitBtn: false,
+                resetBtn: false
+            },
         }  
     },
     created : function(){

@@ -5,3 +5,6 @@
     text-align: center;
     font-size: 18px;
 }
+.el-input__inner, .el-input{
+    width: 100%;
+}
