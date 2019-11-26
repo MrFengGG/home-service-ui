@@ -50,16 +50,26 @@ export default {
             pageSize : 10,
             total : 0,
             fApi:{
-
+                submitBtn: {
+                    col: {
+                        span: 4
+                    }
+                }
             },
             rule:[{
                     type:'input',
                     field:'goods_name',
-                    title:'商品名称'
+                    title:'商品名称',
+                    col:{
+                        span:12
+                    }
                 },{
                     type:'datePicker',
                     field:'created_at',
-                    title:'创建时间'
+                    title:'创建时间',
+                    col:{
+                        span:12
+                    }
                 }],
             option:{
                 onSubmit:function (formData) {

@@ -36,7 +36,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">确定</el-button>
-      <el-button type="primary" @click="onSubmit">确定</el-button>
+      <el-button type="primary" @click="onSubmit">重置</el-button>
     </el-form-item>
   </el-form>
 </template>
