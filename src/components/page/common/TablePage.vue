@@ -1,7 +1,7 @@
 <template>
     <div>
-        <form-create v-model="fApi" :rule="rule" :option="option"></form-create>
-        <el-table :data="tableData" :tree-props="treeSet" row-key="id" border>
+        <form-create v-model="fApi" :rule="completeRule" :option="option"></form-create>
+        <el-table :data="tableData" :tree-props="treeSet" row-key="id" border style="margin-bottom: 10px">
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
         </el-table>
         <el-pagination
@@ -49,20 +49,40 @@ export default {
             
             },
             tableData: [],
-            pageNo : 1,
-            pageSize : 10,
+            pageNo: 1,
+            pageSize: 10,
             total : 0,
-            fApi:{
+            fApi: {
                 submitBtn: {
                     col: {
                         span: 4
                     }
                 }
             },
-            option:{
+            option: {
                 submitBtn: false,
                 resetBtn: false
             },
+            completeRule: [...this.rule, {
+                    type: 'el-row',
+                    native: true,
+                    children: [{
+                            type: 'el-button',
+                            on: {
+                                click: function(){
+                                    $f.submit();
+                                    //或者
+                                    $f.resetFields();
+                                }
+                            },
+                            col: {
+                                span:3,
+                                push: 1
+                            },
+                            children: ['查询']
+                    }]
+                }
+            ]
         }  
     },
     created : function(){

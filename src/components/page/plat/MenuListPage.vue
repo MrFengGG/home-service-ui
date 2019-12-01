@@ -72,25 +72,7 @@ export default {
                                 rangeSeparator: '至'
                             }
                         }]
-                    },{
-                    type: 'el-row',
-                    native: true,
-                    children: [{
-                            type: 'el-button',
-                            on: {
-                                click: function(){
-                                    $f.submit();
-                                    //或者
-                                    $f.resetFields();
-                                }
-                            },
-                            col: {
-                                span:3,
-                                push: 1
-                            },
-                            children: ['查询']
                     }]
-                }]
         }
     }
 }
