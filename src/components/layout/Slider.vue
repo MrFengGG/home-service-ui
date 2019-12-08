@@ -17,14 +17,11 @@
     components: {
       MenuItem
     },
-    props : {
-        menuUrl : {
-          type: String,
-          default: "/api/menu/getAllMenu?group=plat"
-        }
-    },
     data(){
-        return {menuList : []}
+        return {
+          menuList: [],
+          menuListUrl: this.$url.getUrl('userMenuList')
+        }
     },
     computed: {
       ...mapGetters([
@@ -43,7 +40,7 @@
     },
     methods: {
       handMenuGroupChange(menuGroup){
-        this.$requests.get(this.menuUrl).then(data =>{
+        this.$requests.get(this.menuListUrl,{group: menuGroup}).then(data =>{
           if(data.code == 200){
               this.menuList = data.data;
           }

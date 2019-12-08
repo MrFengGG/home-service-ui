@@ -42,14 +42,11 @@
   import {mapActions, mapGetters} from 'vuex'
   export default {
       name : 'Header',
-      props : {
-          groupUrl : {
-            type: String,
-            default: "api/menu/getAllGroup"
-          }
-      },
       data(){
-          return {menuList : []}
+          return {
+              menuList : [],
+              menuGroupListUrl: this.$url.getUrl('menuGroupList')
+            }
       },
       computed: {
         ...mapGetters([
@@ -57,7 +54,7 @@
         ])
       },
       created(){
-        this.$requests.get(this.groupUrl).then(data =>{
+        this.$requests.get(this.menuGroupListUrl).then(data =>{
             if(data.code > 0){
                 this.menuList = data.data;
             }

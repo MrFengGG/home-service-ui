@@ -7,7 +7,7 @@
       <el-input v-model="form.code"></el-input>
     </el-form-item>
     <el-form-item label="父级菜单">
-      <el-cascader v-model="form.parentCode" :options="menuList" :props="{ checkStrictly: true,label: 'menuName', value: 'code', children: 'childList'}" clearable></el-cascader>
+      <CascaderSelector :url="menuListUrl" label="menuName" childName="childList" v-model="form.parentCode" :checkStrictly="true"/>
     </el-form-item>
     <el-form-item label="菜单图标">
       <icon-picker v-model="form.icon"></icon-picker>
@@ -22,9 +22,7 @@
       <el-input v-model="form.priority"></el-input>
     </el-form-item>
     <el-form-item label="菜单组">
-      <el-select v-model="form.menuGroupCode" placeholder="请选择菜单组">
-        <el-option v-for="menuGroup in menuGroupList" :label="menuGroup.groupName" :key="menuGroup.code" :value="menuGroup.code"></el-option>
-      </el-select>
+      <DataSelector :url="menuGroupUrl" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
     </el-form-item>
     <el-form-item label="菜单路径">
       <el-select v-model="form.menuPath" placeholder="请选择菜单路径">
@@ -57,28 +55,35 @@
     div.jsoneditor-tree{
       min-height: 400px;
     }
+    .el-input__inner, .el-date-editor--datetimerange,.el-date-editor{
+      width: 100% !important
+    }
 </style>
 <script>
-import vueJsonEditor from 'vue-json-editor'
+import CascaderSelector from '../../form/CascaderSelector'
+import DataSelector from '../../form/DataSelector'
 export default {
     name: 'MenuEditPage',
     components:{
-      vueJsonEditor
+      CascaderSelector,
+      DataSelector
     },
     data() {
       return {
         form: {
-          componentName: '',
 
         },
         menuList: [],
         menuGroupList: [],
-        pathList: this.$router.getPathSelector()
+        pathList: this.$router.getPathSelector(),
+        menuListUrl: this.$url.getUrl('allMenuList'),
+        menuGroupUrl: this.$url.getUrl('menuGroupList')
       }
     },
     methods:{
         onSubmit(){
-          this.$requests.post('/api/menu/save', this.form).then(data => {
+          const saveUrl = this.$url.getUrl('saveMenu')
+          this.$requests.post(saveUrl, this.form).then(data => {
             if(data.code == 200){
               this.$message({
                 type: 'success',
@@ -92,29 +97,12 @@ export default {
             }
           })
         },
-        initMenuSelector(){
-          this.$requests.get('/api/menu/getAllMenu').then(data =>{
-            if(data.code > 0){
-              this.menuList = data.data;
-            }
-          });
+        initForm(){
+         
         },
-        initMEnuGroupSelector(){
-          this.$requests.get('/api/menu/getAllGroup').then(data =>{
-            if(data.code > 0){
-              this.menuGroupList = data.data;
-            }
-          });
-        },
-    },
-    created(){
-      this.initMenuSelector();
-      this.initMEnuGroupSelector();
-    },
-    watch: {
-      'form.componentName': function(val){
-        this.handComponentChange(val)
-      }
+        created(){
+          initForm();
+        }
     }
 }
 </script>

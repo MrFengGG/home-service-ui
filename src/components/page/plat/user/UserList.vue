@@ -9,7 +9,7 @@
                 </el-col>
                 <el-col :span="9">
                     <el-form-item label="菜单组">
-                        <DataSelector :url="menuGroupUrl" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
+                        <DataSelector url="/api/menu/getAllGroup" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -40,6 +40,16 @@
         <el-table :data="tableData" :tree-props="treeSet" row-key="id" border style="margin-top: 20px">
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
         </el-table>
+        <el-pagination
+            style="text-align: right"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNo"
+            :page-sizes="[10, 15, 20, 25]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+        </el-pagination>
     </div>
 </template>
 <style >
@@ -54,7 +64,7 @@
     }
 </style>
 <script>
-import DataSelector from '../../form/DataSelector'
+import DataSelector from '../../../form/DataSelector'
 export default {
     name: 'MenuListPage',
     components: {
@@ -107,11 +117,11 @@ export default {
             treeSet: {
                 children: 'childList'
             },
-            submitUrl: this.$url.getUrl('allMenuList'),
-            menuGroupUrl: this.$url.getUrl('menuGroupList')
+            submitUrl: '/api/menu/pageQuery'
         }  
     },
     created : function(){
+        console.log(111)
         this.query();
     },
     methods : {
@@ -122,8 +132,7 @@ export default {
                 pageSize : this.pageSize
             }).then(data =>{
                 if(data.code > 0){
-                    this.tableData = data.data;
-                    console.log(this.tableData)
+                    this.tableData = data.data.data;
                 }
                 this.total = data.data.total;
             })

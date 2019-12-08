@@ -8,6 +8,7 @@ import router from './router/router'
 import App from './App.vue'
 import store from './store/store'
 import requests from './common/request'
+import url from './common/url'
 
 import 'font-awesome/css/font-awesome.min.css' 
 import 'element-ui/lib/theme-chalk/index.css'
@@ -23,6 +24,7 @@ Vue.use(formCreate)
 Vue.config.productionTip = false
 
 Vue.prototype.$requests = requests;
+Vue.prototype.$url = url;
 
 new Vue({
   router,

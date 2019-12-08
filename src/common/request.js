@@ -6,9 +6,10 @@ import { Message } from 'element-ui';
 
 const get = function(url, param){
     const config = {
-        params:param,
+        params:parseParam(param),
         headers:commonHeader()
     }
+    console.log(config)
     return axios.get(url, config).then(response => {
         return new Promise(function(resolve, reject){
             if(response.status == 200){
@@ -50,6 +51,14 @@ const handSessionTimeOut = function(){
         store.dispatch('clearToken');
         router.push('/login');
     },1000);
+};
+const parseParam = function(param){
+    for(let i in param){
+        if(param[i] instanceof Array){
+            param[i] = param[i].join(",");
+        }
+    }
+    return param;
 }
 export default{
     get,

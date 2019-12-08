@@ -1,0 +1,62 @@
+<template>
+    <el-cascader v-model="chooseValue" :options="options" :props="{ checkStrictly: checkStrictly, label: label, value: value, children: childName}" clearable @change="update"></el-cascader>
+</template>
+<script>
+export default {
+    name: 'CascaderSelector',
+    model: {
+        prop: 'selectValue',
+        event: 'select'
+    },
+    props: {
+        url: {
+            type: String,
+            required: true
+        },
+        checkStrictly: {
+            type: Boolean,
+            default: false
+        },
+        label: {
+            type: String,
+            default: 'label'
+        },
+        value: {
+            type: String,
+            default: 'code'
+        },
+        childName: {
+            type: String,
+            default: 'childList'
+        },
+        multiple: {
+            type: Boolean,
+            default: false
+        },
+        selectValue: {
+            type: String
+        }
+    },
+    data: function(){
+        return {
+            chooseValue: '',
+            options: []
+        }
+    },
+    created: function(){
+        this.$requests.get(this.url).then(data =>{
+            if(data.code > 0){
+              this.options = data.data;
+            }
+          });
+    },
+    methods: {
+        update: function(value){
+            if(!this.multiple){
+                value = value && value[0];
+            }
+            this.$emit('select', value);
+        }
+    }
+}
+</script>

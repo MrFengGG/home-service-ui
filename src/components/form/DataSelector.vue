@@ -1,19 +1,26 @@
 <template>
 <div>
-    <el-option
+    <el-select placeholder="请选择" @change="update" v-model="selectValue">
+        <el-option
         v-for="item in options"
         :key="item.value"
         :label="item.name"
         :value="item.value">
-    </el-option>
+        </el-option>
+  </el-select>
 </div>
 </template>
 <script>
 export default {
-    name: 'SelectorOption',
+    name: 'DataSelector',
+    model: {
+        prop: 'value',
+        event: 'select'
+    },
     data: function(){
         return {
-            options: []
+            options: [],
+            selectValue: ''
         }
     },
     props:{
@@ -28,6 +35,9 @@ export default {
         dataCode: {
             type: String,
             default: 'code'
+        },
+        value: {
+            type: String
         }
     },
     created: function(){
@@ -36,9 +46,13 @@ export default {
               this.options = data.data.map(option => {
                   return {name: option[this.dataName], value: option[this.dataCode]};
                 });
-                console.log(this.options)
             }
           });
+    },
+    methods: {
+        update: function(value){
+            this.$emit('select', value);
+        }
     }
 }
 </script>

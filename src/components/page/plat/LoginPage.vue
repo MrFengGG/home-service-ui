@@ -53,7 +53,8 @@ export default {
             "changeToken"
         ]),
         handleSubmit(){
-            this.$requests.get('/api/auth/accessToken',this.form).then(data =>{
+            const loginUrl = this.$url.getUrl('login');
+            this.$requests.get(loginUrl, this.form).then(data =>{
                 if(data.code <= 0){
                     this.$message({
                         type: 'warning',
