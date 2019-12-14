@@ -39,6 +39,17 @@
         </el-form>
         <el-table :data="tableData" :tree-props="treeSet" row-key="id" border style="margin-top: 20px">
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
+            <el-table-column label="操作" width="200">
+                <template slot-scope="scope">
+                    <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
         </el-table>
     </div>
 </template>
@@ -112,6 +123,7 @@ export default {
         }  
     },
     created : function(){
+        console.log(222)
         this.query();
     },
     methods : {
@@ -123,7 +135,6 @@ export default {
             }).then(data =>{
                 if(data.code > 0){
                     this.tableData = data.data;
-                    console.log(this.tableData)
                 }
                 this.total = data.data.total;
             })
@@ -135,6 +146,15 @@ export default {
         handleCurrentChange(pageNo){
             this.pageNo = pageNo;
             this.query();
+        },
+        handleEdit(index, row) {
+            console.log(index, row);
+            this.$router.push({path: "/plat/menu/edit", query: {
+                menuId: row.id
+            }})
+        },
+        handleDelete(index, row) {
+            console.log(index, row);
         }
     }
 }

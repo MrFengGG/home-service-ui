@@ -7,7 +7,7 @@ const menuDetail = '/menu/find_by_id';
 
 const menuGroupList = '/menu/get_menu_groups';
 
-const saveMenu = 'menu/save'
+const saveMenu = 'menu/save_or_update'
 
 //sys
 const login = '/auth/access_token'

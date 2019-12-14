@@ -98,11 +98,20 @@ export default {
           })
         },
         initForm(){
-         
-        },
-        created(){
-          initForm();
+          if(this.$route.query.menuId){
+            const menuDetailUrl = this.$url.getUrl('menuDetail');
+            this.$requests.get(menuDetailUrl,{id: this.$route.query.menuId}).then(data => {
+              if(data.code == 200){
+                this.form = data.data;
+              }else{
+
+              }
+            });
+          }
         }
+    },
+    created(){
+      this.initForm();
     }
 }
 </script>
