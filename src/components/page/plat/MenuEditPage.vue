@@ -7,22 +7,22 @@
       <el-input v-model="form.code"></el-input>
     </el-form-item>
     <el-form-item label="父级菜单">
-      <CascaderSelector :url="menuListUrl" label="menuName" childName="childList" v-model="form.parentCode" :checkStrictly="true"/>
+      <CascaderSelector :url="menuListUrl" label="menuName" :initValue="form.parentCode" childName="childList" v-model="form.parentCode" :checkStrictly="true"/>
     </el-form-item>
     <el-form-item label="菜单图标">
       <icon-picker v-model="form.icon"></icon-picker>
     </el-form-item>
     <el-form-item label="菜单类型">
       <el-select v-model="form.menuType" placeholder="请选择菜单类型">
-        <el-option label="父级菜单" value="1"></el-option>
-        <el-option label="可跳转菜单" value="0"></el-option>
+        <el-option label="父级菜单" :value="1"></el-option>
+        <el-option label="可跳转菜单" :value="0"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="优先级">
       <el-input v-model="form.priority"></el-input>
     </el-form-item>
     <el-form-item label="菜单组">
-      <DataSelector :url="menuGroupUrl" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
+      <DataSelector :url="menuGroupUrl" dataName="groupName" dataCode="code" v-model="form.menuGroupCode" :initValue="form.menuGroupCode"/>
     </el-form-item>
     <el-form-item label="菜单路径">
       <el-select v-model="form.menuPath" placeholder="请选择菜单路径">
@@ -71,7 +71,7 @@ export default {
     data() {
       return {
         form: {
-
+          menuType: '1'
         },
         menuList: [],
         menuGroupList: [],
@@ -103,6 +103,7 @@ export default {
             this.$requests.get(menuDetailUrl,{id: this.$route.query.menuId}).then(data => {
               if(data.code == 200){
                 this.form = data.data;
+                console.log(this.form)
               }else{
 
               }

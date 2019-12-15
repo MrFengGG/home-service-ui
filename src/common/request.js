@@ -5,12 +5,10 @@ import { Message } from 'element-ui';
 
 
 const get = function(url, param){
-    console.log(param)
     const config = {
         params:parseParam(param),
         headers:commonHeader()
     }
-    console.log(config) 
     return axios.get(url, config).then(response => {
         return new Promise(function(resolve, reject){
             if(response.status == 200){

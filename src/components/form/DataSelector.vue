@@ -38,6 +38,10 @@ export default {
         },
         value: {
             type: String
+        },
+        initValue: {
+            type: String,
+            default: ''
         }
     },
     created: function(){
@@ -46,6 +50,7 @@ export default {
               this.options = data.data.map(option => {
                   return {name: option[this.dataName], value: option[this.dataCode]};
                 });
+                this.selectValue = this.initValue;
             }
           });
     },

@@ -35,6 +35,10 @@ export default {
         },
         selectValue: {
             type: String
+        },
+        initValue: {
+            type: String,
+            default: ''
         }
     },
     data: function(){
@@ -47,6 +51,7 @@ export default {
         this.$requests.get(this.url).then(data =>{
             if(data.code > 0){
               this.options = data.data;
+              this.chooseValue = this.initValue;
             }
           });
     },
