@@ -62,6 +62,11 @@ export default {
             }
             this.$emit('select', value);
         }
+    },
+    watch: {
+        initValue(value){
+            this.selectValue = value;
+        }
     }
 }
 </script>

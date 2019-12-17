@@ -58,6 +58,11 @@ export default {
         update: function(value){
             this.$emit('select', value);
         }
+    },
+    watch: {
+        initValue(value){
+            this.value = value;
+        }
     }
 }
 </script>

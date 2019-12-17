@@ -123,7 +123,6 @@ export default {
         }  
     },
     created : function(){
-        console.log(222)
         this.query();
     },
     methods : {
