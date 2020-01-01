@@ -52,12 +52,16 @@ const handSessionTimeOut = function(){
     },1000);
 };
 const parseParam = function(param){
+    let result = {};
     for(let i in param){
-        if(param[i] instanceof Array){
-            param[i] = param[i].join(",");
+        if(!!param[i]){
+            result[i] = param[i];
+        }
+        if(result[i] instanceof Array){
+            result[i] = result[i].join(",");
         }
     }
-    return param;
+    return result;
 }
 export default{
     get,

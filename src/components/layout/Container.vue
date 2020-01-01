@@ -6,9 +6,7 @@
           <slot name="header"></slot>
         </el-header>
         <el-main>
-          <el-scrollbar style="height: 100%;">
             <slot name="main"></slot>
-          </el-scrollbar>
         </el-main>
         <el-footer>
           <slot name="foot"></slot>
@@ -40,9 +38,6 @@
   
   body > .el-container {
     margin-bottom: 40px;
-  }
-  .el-scrollbar__wrap {
-    overflow-x: hidden;
   }
 </style>
 <script>

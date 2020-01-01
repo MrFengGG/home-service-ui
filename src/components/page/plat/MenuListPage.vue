@@ -44,10 +44,7 @@
                     <el-button
                     size="mini"
                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <confirmButton :data="{menuCode: scope.row['code'], recursion: true}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
                 </template>
             </el-table-column>
         </el-table>
@@ -66,10 +63,12 @@
 </style>
 <script>
 import DataSelector from '../../form/DataSelector'
+import confirmButton from '../../common/ConfirmButton'
 export default {
     name: 'MenuListPage',
     components: {
-        DataSelector
+        DataSelector,
+        confirmButton
     },
     data() {
         return {
@@ -119,7 +118,8 @@ export default {
                 children: 'childList'
             },
             submitUrl: this.$url.getUrl('allMenuList'),
-            menuGroupUrl: this.$url.getUrl('menuGroupList')
+            menuGroupUrl: this.$url.getUrl('menuGroupList'),
+            menuRemoveUrl: this.$url.getUrl('removeMenu'),
         }  
     },
     created : function(){
@@ -135,7 +135,7 @@ export default {
                 if(data.code > 0){
                     this.tableData = data.data;
                 }
-                this.total = data.data.total;
+                this.total = data.total;
             })
         },
         handleSizeChange(pageSize){
@@ -147,13 +147,9 @@ export default {
             this.query();
         },
         handleEdit(index, row) {
-            console.log(index, row);
             this.$router.push({path: "/plat/menu/edit", query: {
                 menuId: row.id
             }})
-        },
-        handleDelete(index, row) {
-            console.log(index, row);
         }
     }
 }

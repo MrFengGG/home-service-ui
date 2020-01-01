@@ -7,7 +7,11 @@ const menuDetail = '/menu/find_by_id';
 
 const menuGroupList = '/menu/get_menu_groups';
 
-const saveMenu = 'menu/save_or_update'
+const saveMenu = 'menu/save'
+
+const updateMenu = 'menu/update'
+
+const removeMenu = 'menu/remove'
 
 //sys
 const login = '/auth/access_token'
@@ -22,6 +26,8 @@ const urlMap = {
     menuDetail,
     menuGroupList,
     saveMenu,
+    removeMenu,
+    updateMenu,
 
     login,
     logout,

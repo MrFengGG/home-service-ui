@@ -1,6 +1,6 @@
 <template>
 <div>
-    <el-select placeholder="请选择" @change="update" v-model="selectValue">
+    <el-select placeholder="请选择" @change="update" v-model="selectValue" clearable>
         <el-option
         v-for="item in options"
         :key="item.value"
@@ -61,7 +61,7 @@ export default {
     },
     watch: {
         initValue(value){
-            this.value = value;
+            this.selectValue = value;
         }
     }
 }

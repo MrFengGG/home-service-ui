@@ -14,16 +14,11 @@
                     placement="bottom"
                     width="300"
                     trigger="click">
-                    <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                            <span>卡片名称</span>
-                            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                        <div class="clearfix">
+                            <span>{{currentUser.nickName}}</span>
+                            <el-button style="float: right; padding: 3px 0" type="text">退出登录</el-button>
                         </div>
-                        <div v-for="o in 4" :key="o" class="text item">
-                            {{'列表内容 ' + o }}
-                        </div>
-                    </el-card>
-                    <el-avatar class="headImage" shape="square" size="medium" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" slot="reference"></el-avatar>
+                    <el-avatar class="headImage" shape="square" size="medium" :src="currentUser.headImage" slot="reference"></el-avatar>
                     </el-popover>
             </el-col>
         </el-row>
@@ -45,7 +40,12 @@
       data(){
           return {
               menuList : [],
-              menuGroupListUrl: this.$url.getUrl('menuGroupList')
+              menuGroupListUrl: this.$url.getUrl('menuGroupList'),
+              logoutUrl: this.$url.getUrl('logout'),
+              currentUserUrl: this.$url.getUrl('currentUser'),
+              currentUser: {
+
+              }
             }
       },
       computed: {
@@ -58,7 +58,12 @@
             if(data.code > 0){
                 this.menuList = data.data;
             }
-        })
+        });
+        this.$requests.get(this.currentUserUrl).then(data =>{
+            if(data.code > 0){
+                this.currentUser = data.data;
+            }
+        });
       },
       methods : {
         ...mapActions([
@@ -67,6 +72,17 @@
         ]),
         handleSelect(key){
             this.changeMenuGroup(key);
+        },
+        logout(){
+            this.$requests.get(this.currentUserUrl).then(data =>{
+                if(data.code > 0){
+                    this.$message({
+                        type: 'success',
+                        message: '退出登录成功'
+                    });
+                    this.$router.push('/');
+                }
+            });
         }
       },
   }
