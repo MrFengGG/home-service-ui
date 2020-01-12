@@ -20,7 +20,7 @@
                 </el-col>
             </el-row>
         </el-form>
-        <el-table :data="tableData" :tree-props="treeSet" row-key="id" border style="margin-top: 20px">
+        <el-table :data="tableData" row-key="id" border style="margin-top: 20px">
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
             <el-table-column label="操作" width="250">
                 <template slot-scope="scope">
@@ -46,7 +46,6 @@ import confirmButton from '../../../common/ConfirmButton'
 export default {
     name: 'RoleListPage',
     components: {
-        DataSelector,
         confirmButton
     },
     data() {
@@ -77,9 +76,6 @@ export default {
                     name: '创建时间'
                 }
             ],
-            treeSet: {
-                children: 'childList'
-            },
             dialogVisible: false,
             submitUrl: this.$url.getUrl('getRolePage'),
             roleListUrl: this.$url.getUrl('allRole')
@@ -96,9 +92,9 @@ export default {
                 pageSize : this.pageSize
             }).then(data =>{
                 if(data.code > 0){
-                    this.tableData = data.data;
+                    this.tableData = data.data.data;
                 }
-                this.total = data.total;
+                this.total = data.data.total;
             })
         },
         jumpToEdit(){

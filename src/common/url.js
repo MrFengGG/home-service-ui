@@ -19,7 +19,7 @@ const getRolePage = '/role/pagination_query'
 const saveRole = '/role/save'
 
 //user
-const getUserPage = '/user/paginationQuery'
+const getUserPage = '/user/pagination_query'
 const giveUserRole = '/user/give_role'
 const updateUser = '/user/update'
 const saveUser = '/user/save'

@@ -53,9 +53,8 @@
         <el-dialog
             title="赋权"
             :visible.sync="dialogVisible"
-            width="35%"
-            :before-close="handleClose">
-            <el-transfer v-model="value" :data="chooseRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
+            width="35%">
+            <el-transfer v-model="chooseRoleList" :data="chooseRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -146,7 +145,7 @@ export default {
                 pageSize : this.pageSize
             }).then(data =>{
                 if(data.code > 0){
-                    this.tableData = data.data;
+                    this.tableData = data.data.data;
                 }
                 this.total = data.total;
             })
