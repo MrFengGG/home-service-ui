@@ -9,7 +9,7 @@
                 </el-col>
                 <el-col :span="9">
                     <el-form-item label="菜单组">
-                        <DataSelector url="/api/menu/getAllGroup" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
+                        <DataSelector :url="menuGroupUrl" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -34,22 +34,33 @@
             <el-row>
                 <el-col :span="16">
                     <el-button type="primary" @click="query" style="margin-left:10%">搜索</el-button>
+                    <el-button type="primary" @click="jumpToEdit" style="margin-left:1%">新建</el-button>
                 </el-col>
             </el-row>
         </el-form>
         <el-table :data="tableData" :tree-props="treeSet" row-key="id" border style="margin-top: 20px">
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
+            <el-table-column label="操作" width="250">
+                <template slot-scope="scope">
+                    <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <confirmButton :data="{menuCode: scope.row['code']}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
+                    <el-button size="mini" @click="dialogVisible = true">权限</el-button>
+                </template>
+            </el-table-column>
         </el-table>
-        <el-pagination
-            style="text-align: right"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="pageNo"
-            :page-sizes="[10, 15, 20, 25]"
-            :page-size="pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total">
-        </el-pagination>
+        <el-dialog
+            title="赋权"
+            :visible.sync="dialogVisible"
+            width="35%"
+            :before-close="handleClose">
+            <el-transfer v-model="value" :data="chooseRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <style >
@@ -65,15 +76,19 @@
 </style>
 <script>
 import DataSelector from '../../../form/DataSelector'
+import confirmButton from '../../../common/ConfirmButton'
 export default {
     name: 'MenuListPage',
     components: {
-        DataSelector
+        DataSelector,
+        confirmButton
     },
     data() {
         return {
             form: {
             },
+            allRoleList: [],
+            chooseRoleList: [],
             tableData: [],
             pageNo: 1,
             pageSize: 10,
@@ -109,19 +124,18 @@ export default {
                 },{
                     code: 'priority',
                     name: '优先级'
-                },{
-                    code: 'needRoles',
-                    name: '可访问角色'
                 }
             ],
             treeSet: {
                 children: 'childList'
             },
-            submitUrl: '/api/menu/pageQuery'
+            dialogVisible: false,
+            submitUrl: this.$url.getUrl('allMenuList'),
+            menuGroupUrl: this.$url.getUrl('menuGroupList'),
+            menuRemoveUrl: this.$url.getUrl('removeMenu'),
         }  
     },
     created : function(){
-        console.log(111)
         this.query();
     },
     methods : {
@@ -132,10 +146,13 @@ export default {
                 pageSize : this.pageSize
             }).then(data =>{
                 if(data.code > 0){
-                    this.tableData = data.data.data;
+                    this.tableData = data.data;
                 }
-                this.total = data.data.total;
+                this.total = data.total;
             })
+        },
+        jumpToEdit(){
+            this.$router.push({path: "/plat/menu/edit"});
         },
         handleSizeChange(pageSize){
             this.pageSize = pageSize;
@@ -144,6 +161,11 @@ export default {
         handleCurrentChange(pageNo){
             this.pageNo = pageNo;
             this.query();
+        },
+        handleEdit(index, row) {
+            this.$router.push({path: "/plat/menu/edit", query: {
+                menuId: row.id
+            }})
         }
     }
 }

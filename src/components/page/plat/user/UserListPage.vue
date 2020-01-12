@@ -3,19 +3,19 @@
         <el-form ref="form" label-width="80px" slot="slider">
             <el-row :gutter="20">
                 <el-col :span="9">
-                    <el-form-item label="菜单名称">
+                    <el-form-item label="用户名">
                         <el-input v-model="form.menuName"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="9">
-                    <el-form-item label="菜单组">
-                        <DataSelector :url="menuGroupUrl" dataName="form.menuGroupName" dataCode="code" v-model="form.groupCode"/>
+                    <el-form-item label="手机">
+                        <el-input v-model="form.menuPath"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="9">
-                    <el-form-item label="创建时间">
+                    <el-form-item label="生日">
                     <el-date-picker
                         v-model="form.createTimeTuple"
                         type="datetimerange"
@@ -25,29 +25,37 @@
                     </el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :span="9">
-                    <el-form-item label="菜单路径">
-                        <el-input v-model="form.menuPath"></el-input>
-                    </el-form-item>
-                </el-col>
             </el-row>
             <el-row>
                 <el-col :span="16">
                     <el-button type="primary" @click="query" style="margin-left:10%">搜索</el-button>
+                    <el-button type="primary" @click="jumpToEdit" style="margin-left:1%">新建</el-button>
                 </el-col>
             </el-row>
         </el-form>
         <el-table :data="tableData" :tree-props="treeSet" row-key="id" border style="margin-top: 20px">
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column label="操作" width="250">
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <confirmButton :data="{menuCode: scope.row['code'], recursion: true}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
+                    <confirmButton :data="{menuCode: scope.row['code']}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
+                    <el-button size="mini" @click="dialogVisible = true">权限</el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <el-dialog
+            title="赋权"
+            :visible.sync="dialogVisible"
+            width="35%"
+            :before-close="handleClose">
+            <el-transfer v-model="value" :data="chooseRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <style >
@@ -62,10 +70,10 @@
     }
 </style>
 <script>
-import DataSelector from '../../form/DataSelector'
-import confirmButton from '../../common/ConfirmButton'
+import DataSelector from '../../../form/DataSelector'
+import confirmButton from '../../../common/ConfirmButton'
 export default {
-    name: 'MenuListPage',
+    name: 'UserListPage',
     components: {
         DataSelector,
         confirmButton
@@ -74,6 +82,8 @@ export default {
         return {
             form: {
             },
+            allRoleList: [],
+            chooseRoleList: [],
             tableData: [],
             pageNo: 1,
             pageSize: 10,
@@ -83,40 +93,35 @@ export default {
                     code: 'id',
                     name: 'ID'
                 },{
-                    code: 'code',
-                    name: '菜单代码'
+                    code: 'username',
+                    name: '用户名'
                 },{
-                    code: 'menuType',
-                    name: '菜单类型'
+                    code: 'real_name',
+                    name: '姓名'
                 },{
-                    code: 'menuGroupCode',
-                    name: '所属菜单组'
+                    code: 'nick_name',
+                    name: '昵称'
                 },{
-                    code: 'icon',
-                    name: '图标'
+                    code: 'mobile',
+                    name: '手机号'
                 },{
-                    code: 'menuName',
-                    name: '菜单名称'
+                    code: 'email',
+                    name: '邮箱'
                 },{
-                    code: 'menuPath',
-                    name: '菜单路径'
+                    code: 'head_image',
+                    name: '头像'
                 },{
-                    code: 'createTime',
-                    name: '创建时间'
+                    code: 'birthday',
+                    name: '生日'
                 },{
-                    code: 'menuDesc',
-                    name: '备注'
+                    code: 'last_login_time',
+                    name: '上次登录时间'
                 },{
-                    code: 'priority',
-                    name: '优先级'
-                },{
-                    code: 'needRoles',
-                    name: '可访问角色'
+                    code: 'status',
+                    name: '帐号状态'
                 }
             ],
-            treeSet: {
-                children: 'childList'
-            },
+            dialogVisible: false,
             submitUrl: this.$url.getUrl('allMenuList'),
             menuGroupUrl: this.$url.getUrl('menuGroupList'),
             menuRemoveUrl: this.$url.getUrl('removeMenu'),
@@ -137,6 +142,9 @@ export default {
                 }
                 this.total = data.total;
             })
+        },
+        jumpToEdit(){
+            this.$router.push({path: "/plat/menu/edit"});
         },
         handleSizeChange(pageSize){
             this.pageSize = pageSize;

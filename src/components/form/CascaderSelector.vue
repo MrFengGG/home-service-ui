@@ -15,7 +15,7 @@ export default {
         },
         checkStrictly: {
             type: Boolean,
-            default: false
+            default: true
         },
         label: {
             type: String,
@@ -57,8 +57,9 @@ export default {
     },
     methods: {
         update: function(value){
+            console.log(value)
             if(!this.multiple){
-                value = value && value[0];
+                value = value && value[value.length - 1];
             }
             this.$emit('select', value);
         }

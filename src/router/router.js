@@ -16,9 +16,12 @@ const getPageComponent = function(pagePath){
 const LoginPage = getPageComponent('/plat/LoginPage');
 const Home = getPageComponent('/plat/Home');
 const Index = getPageComponent('/plat/Index');
-const MenuEditPage = getPageComponent('/plat/MenuEditPage');
+const MenuEditPage = getPageComponent('/plat/menu/MenuEditPage');
 const FormEditPage = getPageComponent('/plat/FormEditPage');
-const MenuListPage = getPageComponent('/plat/MenuListPage');
+const MenuListPage = getPageComponent('/plat/menu/MenuListPage');
+
+const RoleListPage = getPageComponent('/plat/role/RoleListPage');
+const UserListPage = getPageComponent('/plat/user/UserListPage')
 
 //菜单页面
 const menuRouter = [
@@ -49,6 +52,20 @@ const menuRouter = [
         meta: {
             needLogin: true,
             routerName: '平台管理-菜单列表'
+        }
+    },{
+        path: '/plat/role/list',
+        component: RoleListPage,
+        meta: {
+            needLogin: true,
+            routerName: '平台管理-角色列表'
+        }
+    },{
+        path: '/plat/user/list',
+        component: UserListPage,
+        meta: {
+            needLogin: true,
+            routerName: '平台管理-用户列表'
         }
     }
 ]

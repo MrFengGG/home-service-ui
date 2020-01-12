@@ -7,7 +7,7 @@
       <el-input v-model="form.code"></el-input>
     </el-form-item>
     <el-form-item label="父级菜单">
-      <DataSelector :url="menuListUrl" dataName="menuName" dataCode="code" v-model="form.parentCode" :initValue="form.parentCode"/>
+      <CascaderSelector :url="menuListUrl" label="menuName" dataCode="code" v-model="form.parentCode" :initValue="form.parentCode"/>
     </el-form-item>
     <el-form-item label="菜单图标">
       <icon-picker v-model="form.icon"></icon-picker>
@@ -60,11 +60,13 @@
     }
 </style>
 <script>
-import DataSelector from '../../form/DataSelector'
+import DataSelector from '../../../form/DataSelector'
+import CascaderSelector from '../../../form/CascaderSelector'
 export default {
     name: 'MenuEditPage',
     components:{
-      DataSelector
+      DataSelector,
+      CascaderSelector
     },
     data() {
       return {
