@@ -46,7 +46,7 @@
                     size="mini"
                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <confirmButton :data="{menuCode: scope.row['code']}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
-                    <el-button size="mini" @click="dialogVisible = true">权限</el-button>
+                    <el-button size="mini" @click="handleEditRole(scope.$index, scope.row)">权限</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -54,10 +54,10 @@
             title="赋权"
             :visible.sync="dialogVisible"
             width="35%">
-            <el-transfer v-model="chooseRoleList" :data="chooseRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
+            <el-transfer v-model="chooseRoleList" :data="allRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="giveMenuRole()">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -86,6 +86,7 @@ export default {
         return {
             form: {
             },
+            currentMenuCode: '',
             allRoleList: [],
             chooseRoleList: [],
             tableData: [],
@@ -132,10 +133,14 @@ export default {
             submitUrl: this.$url.getUrl('allMenuList'),
             menuGroupUrl: this.$url.getUrl('menuGroupList'),
             menuRemoveUrl: this.$url.getUrl('removeMenu'),
+            roleListUrl: this.$url.getUrl('allRole'),
+            menuRole: this.$url.getUrl('menuRole'),
+            giveMenuRoleUrl: this.$url.getUrl('giveMenuRole'),
         }  
     },
     created : function(){
         this.query();
+        this.fetchRoleList();
     },
     methods : {
         query(){
@@ -145,9 +150,34 @@ export default {
                 pageSize : this.pageSize
             }).then(data =>{
                 if(data.code > 0){
-                    this.tableData = data.data.data;
+                    this.tableData = data.data;
+                    this.total = data.total;
+                }else{
+                    this.$message({
+                        type: 'warning',
+                        message: `菜单查询失败: ${ data.msg }`
+                    });
                 }
-                this.total = data.total;
+            
+            })
+        },
+        fetchRoleList(){
+            this.$requests.get(this.roleListUrl, {}).then(data =>{
+                if(data.code > 0){
+                    this.allRoleList = data.data.map(role => {
+                        return {
+                            key: role['code'],
+                            label: role['roleName']
+                        }
+                    });
+                }
+            })
+        },
+        fetchMenuRole(menuCode){
+            this.$requests.get(this.menuRole, {menuCode: menuCode}).then(data =>{
+                if(data.code > 0){
+                    this.chooseRoleList = data.data;
+                }
             })
         },
         jumpToEdit(){
@@ -165,6 +195,24 @@ export default {
             this.$router.push({path: "/plat/menu/edit", query: {
                 menuId: row.id
             }})
+        },
+        handleEditRole(index, row) {
+            this.dialogVisible = true;
+            this.fetchMenuRole(row.code);
+            this.currentMenuCode = row.code;
+        },
+        giveMenuRole(){
+            this.$requests.post(this.giveMenuRoleUrl, {roleList: this.chooseRoleList, menuCode: this.currentMenuCode}).then(data =>{
+                if(data.code > 0){
+                    this.dialogVisible = false;
+                    this.fetchRoleList();
+                }else{
+                    this.$message({
+                        type: 'warning',
+                        message: `角色保存失败: ${ data.msg }`
+                    });
+                }
+            })            
         }
     }
 }

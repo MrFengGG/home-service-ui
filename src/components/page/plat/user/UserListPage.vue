@@ -40,8 +40,7 @@
                     <el-button
                     size="mini"
                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <confirmButton :data="{menuCode: scope.row['code']}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
-                    <el-button size="mini" @click="dialogVisible = true">权限</el-button>
+                    <el-button size="mini" @click="handleEditRole(scope.$index, scope.row)">权限</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -49,10 +48,10 @@
             title="赋权"
             :visible.sync="dialogVisible"
             width="35%">
-            <el-transfer v-model="chooseRoleList" :data="chooseRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
+            <el-transfer v-model="chooseRoleList" :data="allRoleList" :titles="['可用权限', '已有权限']"></el-transfer>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="giveUserRole()">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -81,6 +80,7 @@ export default {
         return {
             form: {
             },
+            userId: '',
             allRoleList: [],
             chooseRoleList: [],
             tableData: [],
@@ -95,10 +95,10 @@ export default {
                     code: 'username',
                     name: '用户名'
                 },{
-                    code: 'real_name',
+                    code: 'realName',
                     name: '姓名'
                 },{
-                    code: 'nick_name',
+                    code: 'nickName',
                     name: '昵称'
                 },{
                     code: 'mobile',
@@ -107,13 +107,13 @@ export default {
                     code: 'email',
                     name: '邮箱'
                 },{
-                    code: 'head_image',
+                    code: 'headImage',
                     name: '头像'
                 },{
                     code: 'birthday',
                     name: '生日'
                 },{
-                    code: 'last_login_time',
+                    code: 'lastLoginTime',
                     name: '上次登录时间'
                 },{
                     code: 'status',
@@ -122,12 +122,26 @@ export default {
             ],
             dialogVisible: false,
             submitUrl: this.$url.getUrl('getUserPage'),
+            roleListUrl: this.$url.getUrl('allRole'),
+            giveUserRoleUrl: this.$url.getUrl('giveUserRole')
         }  
     },
     created : function(){
         this.query();
     },
     methods : {
+        fetchRoleList(){
+            this.$requests.get(this.roleListUrl, {}).then(data =>{
+                if(data.code > 0){
+                    this.allRoleList = data.data.map(role => {
+                        return {
+                            key: role['code'],
+                            label: role['roleName']
+                        }
+                    });
+                }
+            })
+        },
         query(){
             this.$requests.get(this.submitUrl, {
                 ...this.form,
@@ -141,7 +155,7 @@ export default {
             })
         },
         jumpToEdit(){
-            this.$router.push({path: "/plat/menu/edit"});
+            this.$router.push({path: "/plat/user/edit"});
         },
         handleSizeChange(pageSize){
             this.pageSize = pageSize;
@@ -152,9 +166,30 @@ export default {
             this.query();
         },
         handleEdit(index, row) {
-            this.$router.push({path: "/plat/menu/edit", query: {
-                menuId: row.id
+            this.$router.push({path: "/plat/user/edit", query: {
+                userId: row.id
             }})
+        },
+        handleEditRole(index, row) {
+            this.dialogVisible = true;
+            this.userId = row.id;
+            console.log(row)
+            this.chooseRoleList = row.roles;
+            this.fetchRoleList();
+        },
+        giveUserRole(){
+            this.$requests.post(this.giveUserRoleUrl, {roleList: this.chooseRoleList, userId: this.userId}).then(data =>{
+                if(data.code > 0){
+                    this.dialogVisible = false;
+                    this.fetchRoleList();
+                    this.query();
+                }else{
+                    this.$message({
+                        type: 'warning',
+                        message: `角色保存失败: ${ data.msg }`
+                    });
+                }
+            })            
         }
     }
 }

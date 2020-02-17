@@ -16,7 +16,7 @@
                     trigger="click">
                         <div class="clearfix">
                             <span>{{currentUser.nickName}}</span>
-                            <el-button style="float: right; padding: 3px 0" type="text">退出登录</el-button>
+                            <el-button style="float: right; padding: 3px 0" type="text" @click="logout()">退出登录</el-button>
                         </div>
                     <el-avatar class="headImage" shape="square" size="medium" :src="currentUser.headImage" slot="reference"></el-avatar>
                     </el-popover>
@@ -74,13 +74,13 @@
             this.changeMenuGroup(key);
         },
         logout(){
-            this.$requests.get(this.currentUserUrl).then(data =>{
+            this.$requests.get(this.logoutUrl).then(data =>{
                 if(data.code > 0){
                     this.$message({
                         type: 'success',
                         message: '退出登录成功'
                     });
-                    this.$router.push('/');
+                    this.$router.push('/login');
                 }
             });
         }

@@ -4,19 +4,19 @@
             <el-row :gutter="20">
                 <el-col :span="9">
                     <el-form-item label="角色代码">
-                        <el-input v-model="form.roleName"></el-input>
+                        <el-input v-model="form.code"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="9">
                     <el-form-item label="角色名称">
-                        <el-input v-model="form.menuPath"></el-input>
+                        <el-input v-model="form.roleName"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="16">
                     <el-button type="primary" @click="query" style="margin-left:10%">搜索</el-button>
-                    <el-button type="primary" @click="jumpToEdit" style="margin-left:1%">新建</el-button>
+                    <el-button type="primary" @click="dialogVisible = true" style="margin-left:1%">新建</el-button>
                 </el-col>
             </el-row>
         </el-form>
@@ -24,10 +24,27 @@
             <el-table-column v-for="head in tableHead" :prop="head.code" :key="head.code" :label="head.name"></el-table-column>
             <el-table-column label="操作" width="250">
                 <template slot-scope="scope">
-                    <confirmButton :data="{menuCode: scope.row['code']}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="menuRemoveUrl" :afterSuccess="query"/>
+                    <confirmButton :data="{roleCode: scope.row['code']}" confirmText="确认删除吗?" name="删除" size="mini" type="danger" :url="roleRemoveUrl" :afterSuccess="query"/>
                 </template>
             </el-table-column>
         </el-table>
+        <el-dialog title="新建角色" :visible.sync="dialogVisible">
+            <el-form :model="form">
+                <el-form-item label="角色名称" label-width="120px">
+                    <el-input v-model="createForm.roleName" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="角色代码" label-width="120px">
+                    <el-input v-model="createForm.code" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" label-width="120px">
+                    <el-input type="textarea" v-model="createForm.roleDesc"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveRole()">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <style >
@@ -52,6 +69,9 @@ export default {
         return {
             form: {
             },
+            createForm: {
+
+            },
             allRoleList: [],
             chooseRoleList: [],
             tableData: [],
@@ -66,19 +86,21 @@ export default {
                     code: 'code',
                     name: '角色代码'
                 },{
-                    code: 'role_name',
+                    code: 'roleName',
                     name: '角色名称'
                 },{
-                    code: 'role_desc',
+                    code: 'roleDesc',
                     name: '详情'
                 },{
-                    code: 'create_time',
+                    code: 'createTime',
                     name: '创建时间'
                 }
             ],
             dialogVisible: false,
             submitUrl: this.$url.getUrl('getRolePage'),
-            roleListUrl: this.$url.getUrl('allRole')
+            roleListUrl: this.$url.getUrl('allRole'),
+            saveRoleUrl: this.$url.getUrl("saveRole"),
+            roleRemoveUrl: this.$url.getUrl("removeRole")
         }  
     },
     created : function(){
@@ -97,9 +119,6 @@ export default {
                 this.total = data.data.total;
             })
         },
-        jumpToEdit(){
-            //todo 创建角色
-        },
         handleSizeChange(pageSize){
             this.pageSize = pageSize;
             this.query();
@@ -110,6 +129,23 @@ export default {
         },
         handleEdit(index, row) {
             //todo 编辑角色
+        },
+        saveRole(){
+            this.$requests.post(this.saveRoleUrl, this.createForm).then(data => {
+                if(data.code == 200){
+                    this.$message({
+                        type: 'success',
+                        message: `${ data.msg }`
+                    });
+                    this.dialogVisible = false;
+                    this.query();
+                }else{
+                    this.$message({
+                        type: 'warning',
+                        message: `角色保存失败: ${ data.msg }`
+                    });
+                }
+            })
         }
     }
 }

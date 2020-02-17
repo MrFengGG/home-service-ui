@@ -21,7 +21,8 @@ const FormEditPage = getPageComponent('/plat/FormEditPage');
 const MenuListPage = getPageComponent('/plat/menu/MenuListPage');
 
 const RoleListPage = getPageComponent('/plat/role/RoleListPage');
-const UserListPage = getPageComponent('/plat/user/UserListPage')
+const UserListPage = getPageComponent('/plat/user/UserListPage');
+const UserEditPage = getPageComponent('/plat/user/UserEditPage');
 
 //菜单页面
 const menuRouter = [
@@ -66,6 +67,13 @@ const menuRouter = [
         meta: {
             needLogin: true,
             routerName: '平台管理-用户列表'
+        }
+    },{
+        path: 'plat/user/edit',
+        component: UserEditPage,
+        meta: {
+            needLogin: true,
+            routerName: '平台管理-用户编辑'
         }
     }
 ]
